@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Products from "./Products";
 import ChosenProducts from "./ChosenProducts";
+import "../../../css/products.css"
 
 export default function ProductsPage() {
   return (
