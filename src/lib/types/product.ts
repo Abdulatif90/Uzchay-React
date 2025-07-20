@@ -12,6 +12,7 @@ export interface Product {
     productDesc?: string;
     productImages: string[];
     productViews: number;
+   
 
 }
 export interface ProductInquiry {

@@ -9,41 +9,53 @@ import VisibilityIcon from "@mui/icons-material/Visibility"
 import { AspectRatio, CardOverflow, Divider } from "@mui/joy";
 // import  DescriptionOutlinedIcon  from "@mui/icons-material/DescriptionOutlined";
 
-const newDishes = [
-    { productName: "Cutlet", imgPath:'/img/cutlet.webp'},
-    { productName: "Lavash", imgPath:'/img/lavash.webp'},
-    { productName: "Kebab", imgPath:'/img/kebab-fresh.webp'},
-    { productName: "Kebab", imgPath:'/img/kebab.webp'},
-]
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveNewDishes } from "./selector";
+import { serverApi } from "../../../lib/config";
+import { Product } from "../../../lib/types/product";
+import { ProductCollection } from   "../../../lib/enum/product.enum";
+
+/** REDUX SLICE & SELECTOR **/
+
+const newDishesRetriver = createSelector(
+  retrieveNewDishes,
+  (newDishes) => ({newDishes})
+);
 
 export default function NewDishes() {
+const { newDishes} = useSelector(newDishesRetriver)
 return ( <div className="new-products-frame">
     <Container>
         <Stack className="main">
             <Box className = "category-title">Fresh Menu</Box>
             <Stack className="cards-frame">
                 <CssVarsProvider>
-             {newDishes.map((ele, index) => {
+               {newDishes.length !== 0 ? (
+                        newDishes.map((product:Product) => {
+                            const imagePath = `${serverApi}/${product.productImages[0]}`
+                            const sizeVolume = product.productCollection === ProductCollection.DRINK ? 
+                            product.productVolume + "l" :product.productSize + "size"
                 return(
-                    <Card key={index} variant="outlined" className = "card">
+                     <Card key={product._id} variant="outlined" className = "card">
                         <CardOverflow>
-                            <div className="product-sale">Normal Size</div>
+                             <div className="product-sale">{sizeVolume}</div>
                             <AspectRatio ratio="1">
-                                <img src={ele.imgPath} alt="" />
+                               <img src={imagePath} alt="" />
                             </AspectRatio>
                         </CardOverflow>
                         <CardOverflow variant="soft" className = "product-detail" >
                             <Stack className="info">
                                 <Stack flexDirection={"row"}>
                                     <Typography className = "title">
-                                        {ele.productName}
+                                        {product.productName}
                                     </Typography>
                                     <Divider sx={{ width:'2px', height:"24px", bg: "#d9d9d9"}}/>
-                                    <Typography className = {"price"}>12$</Typography>
+                                    <Typography className = {"price"}>${product.productPrice}</Typography>
                                 </Stack>
                                 <Stack>
                                     <Typography className = "views">
-                                        20
+                                        {product.productViews}
                                         <VisibilityIcon sx={{fontSize:20, marginLeft : "5px"}}/>
                                     </Typography>
                                 </Stack>
@@ -52,7 +64,10 @@ return ( <div className="new-products-frame">
                     </Card>
             
                     )
-                })}
+                })
+                ) : (
+                    <Typography>No new dishes available.</Typography>
+                )}
                 </CssVarsProvider>
             </Stack>
         </Stack>
