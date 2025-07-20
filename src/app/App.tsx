@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-// import HomePage  from './screens/homePage';
+import HomePage  from './screens/homePage';
 import ProductsPage  from './screens/productsPage';
 import OrderPage  from './screens/orderPage';
 import  UserPage  from './screens/userPage';
@@ -23,7 +23,7 @@ function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/orders" element={<OrderPage />} />
         <Route path="/member-page" element={<UserPage />} />
-        {/* <Route path="/" element={<Test />} /> */}
+         <Route path="/" element={<HomePage />} />
       </Routes>
       <Footer />
     </>
