@@ -1,15 +1,36 @@
 import React from "react";
-import { Container, Stack, Box } from "@mui/material";
-import { Swiper, SwiperSlide } from "swiper/react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Divider from "../../components/divider";
-import Button from "@mui/material/Button";
-import Rating from "@mui/material/Rating";
-import "swiper/css";
-import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Box, Button, Container, Divider, Rating, Stack } from "@mui/material";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setRestaurant, setChosenProduct } from "./slice";
+import { Product } from "../../../lib/types/product";
+import { createSelector } from "reselect";
+import { retrieveRestaurant, retrieveChosenProduct } from "./selector";
+import {Member} from "../../../lib/types/member";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
+  setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
+});
+
+const restaurantRetriever = createSelector(
+  retrieveRestaurant,
+  (restaurant) => ({
+    restaurant,
+  })
+);
+
+const chosenProductRetriever = createSelector(
+  retrieveChosenProduct,
+  (chosenProduct) => ({
+    chosenProduct,
+  })
+);
 
 export default function ChosenProduct() {
   return (
@@ -49,7 +70,7 @@ export default function ChosenProduct() {
               </div>
             </Box>
             <p className={"product-desc"}>Our best product</p>
-            <Divider height="1" width="100%" bg="#000000" />
+            <Divider sx={{ height: "1px", width: "100%", bgcolor: "#000000" }} />
             <div className={"product-price"}>
               <span>Price:</span>
               <span>$12</span>
