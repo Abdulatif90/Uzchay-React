@@ -1,6 +1,7 @@
 import React from "react";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { useEffect } from "react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Button, Container, Divider, Rating, Stack } from "@mui/material";
@@ -11,6 +12,12 @@ import { Product } from "../../../lib/types/product";
 import { createSelector } from "reselect";
 import { retrieveRestaurant, retrieveChosenProduct } from "./selector";
 import {Member} from "../../../lib/types/member";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import MemberService from "../../services/MemberService"
+import ProductService from "../../services/ProductService";
+import { serverApi } from "../../../lib/config";
+
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -33,6 +40,29 @@ const chosenProductRetriever = createSelector(
 );
 
 export default function ChosenProduct() {
+    const { productId } = useParams<{ productId: string }>();
+  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
+  const { restaurant } = useSelector(restaurantRetriever);
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+
+  useEffect(() => {
+    if (!productId) return;
+
+    const product = new ProductService();
+    product
+      .getProduct(productId)
+      .then((data: Product) => setChosenProduct(data))
+      .catch((err: unknown) => console.log(err));
+
+    const member = new MemberService();
+    member
+      .getRestaurant()
+      .then((data: Member) => setRestaurant(data))
+      .catch((err: unknown) => console.log(err));
+  }, [productId, setChosenProduct, setRestaurant]);
+
+  if (!chosenProduct) return null;
+
   return (
     <div className={"chosen-product"}>
       <Box className={"title"}>Product Detail</Box>
@@ -45,35 +75,41 @@ export default function ChosenProduct() {
             modules={[FreeMode, Navigation, Thumbs]}
             className="swiper-area"
           >
-            {["/img/cutlet.webp", "/img/kebab-fresh.webp"].map(
-              (ele: string, index: number) => {
-                return (
-                  <SwiperSlide key={index}>
-                    <img className="slider-image" src={ele} alt="Product" />
-                  </SwiperSlide>
-                );
-              }
-            )}
+            {chosenProduct?.productImages.map((ele: string, index: number) => {
+              const imagePath = `${serverApi}/${ele}`;
+              return (
+                <SwiperSlide key={index}>
+                  <img className="slider-image" src={imagePath} alt="" />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </Stack>
         <Stack className={"chosen-product-info"}>
           <Box className={"info-box"}>
-            <strong className={"product-name"}>Kebab</strong>
-            <span className={"resto-name"}>Burak</span>
+            <strong className={"product-name"}>
+              {chosenProduct?.productName}
+            </strong>
+            <span className={"resto-name"}>{restaurant?.memberNick}</span>
+            <span className={"resto-name"}>{restaurant?.memberPhone}</span>
             <Box className={"rating-box"}>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <div className={"evaluation-box"}>
                 <div className={"product-view"}>
                   <RemoveRedEyeIcon sx={{ mr: "10px" }} />
-                  <span>20</span>
+                   <span>{chosenProduct?.productViews}</span>
                 </div>
               </div>
             </Box>
-            <p className={"product-desc"}>Our best product</p>
+             <p className={"product-desc"}>
+              {chosenProduct?.productDesc
+                ? chosenProduct?.productDesc
+                : "No Description"}
+            </p>
             <Divider sx={{ height: "1px", width: "100%", bgcolor: "#000000" }} />
             <div className={"product-price"}>
               <span>Price:</span>
-              <span>$12</span>
+             <span>${chosenProduct?.productPrice}</span>
             </div>
             <div className={"button-box"}>
               <Button variant="contained">Add To Basket</Button>
