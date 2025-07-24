@@ -11,9 +11,14 @@ import { serverApi } from "../../../lib/config";
 
 interface BasketProps {
   cartItems: CartItem[];
+  onAdd : (item:CartItem) => void;
+  onRemove : (item:CartItem) => void;
+  onDelete : (item:CartItem) => void;
+  onDeleteAll : () => void;
 }
+
 export default function Basket(props:BasketProps) {
-  const {cartItems} = props
+  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -74,7 +79,7 @@ export default function Basket(props:BasketProps) {
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
+            >
         <Stack className={"basket-frame"}>
           <Box className={"all-check-box"}>
            {cartItems.length === 0 ?  <div>Cart is empty!</div> :  <div>Cart Products:</div>}
@@ -86,15 +91,19 @@ export default function Basket(props:BasketProps) {
                 return (
                   <Box className={"basket-info-box"}>
                 <div className={"cancel-btn"}>
-                  <CancelIcon color={"primary"} />
+                  <CancelIcon color={"primary"} onClick={()=> onDelete(item)} />
                 </div>
                  <img src={imagePath} className={"product-img"} alt={item.name || "Product image"} />
                 <span className={"product-name"}>{item.name}</span>
                 <p className={"product-price"}>${item.price} x {item.quantity}</p>
                 <Box sx={{ minWidth: 120 }}>
                   <div className="col-2">
-                    <button className="remove">-</button>{" "}
-                    <button className="add">+</button>
+                     <button className="remove" onClick={() => {
+                      onRemove(item)
+                    }}>-</button>{" "}
+                    <button className="add" onClick={()=>{
+                      onAdd(item)
+                    }}>+</button>
                   </div>
                 </Box>
               </Box>

@@ -120,8 +120,8 @@ export default function ChosenProduct(props : ChosenProductProps) {
             <div className={"button-box"}>
               <Button
                 variant="contained"
-                onClick={() => {
-                  if (chosenProduct) {
+                onClick={(e) => {
+                  e.stopPropagation();
                     onAdd({
                       _id: chosenProduct._id as string,
                       name: chosenProduct.productName,
@@ -130,8 +130,7 @@ export default function ChosenProduct(props : ChosenProductProps) {
                       quantity: 1,
                     });
                   }
-                }}
-              >
+                }>
                 Add To Basket
               </Button>
             </div>
