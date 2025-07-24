@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MemberService from "../../services/MemberService"
 import ProductService from "../../services/ProductService";
 import { serverApi } from "../../../lib/config";
+import { CartItem } from "../../../lib/types/search";
 
 
 /** REDUX SLICE & SELECTOR **/
@@ -39,8 +40,13 @@ const chosenProductRetriever = createSelector(
   })
 );
 
-export default function ChosenProduct() {
-    const { productId } = useParams<{ productId: string }>();
+interface ChosenProductProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function ChosenProduct(props : ChosenProductProps) {
+  const {onAdd} = props;
+  const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { restaurant } = useSelector(restaurantRetriever);
   const { chosenProduct } = useSelector(chosenProductRetriever);
@@ -112,7 +118,22 @@ export default function ChosenProduct() {
              <span>${chosenProduct?.productPrice}</span>
             </div>
             <div className={"button-box"}>
-              <Button variant="contained">Add To Basket</Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  if (chosenProduct) {
+                    onAdd({
+                      _id: chosenProduct._id as string,
+                      name: chosenProduct.productName,
+                      image: chosenProduct.productImages?.[0] || "",
+                      price: chosenProduct.productPrice,
+                      quantity: 1,
+                    });
+                  }
+                }}
+              >
+                Add To Basket
+              </Button>
             </div>
           </Box>
         </Stack>
