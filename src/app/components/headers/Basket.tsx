@@ -7,6 +7,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { CartItem } from "../../../lib/types/search";
 import { serverApi } from "../../../lib/config";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 interface BasketProps {
@@ -19,6 +20,13 @@ interface BasketProps {
 
 export default function Basket(props:BasketProps) {
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props
+  // const authMember = null;
+  /** BASKET CALCULATIONS **/
+  const itemsPrice:number = cartItems.reduce(
+    (a:  number, c: CartItem) => a + c.quantity * c.price, 0
+  );
+  const shippingCost: number = itemsPrice < 1000 ? 5 : 0;
+  const totalPrice = ( itemsPrice + shippingCost).toFixed(1);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -82,7 +90,17 @@ export default function Basket(props:BasketProps) {
             >
         <Stack className={"basket-frame"}>
           <Box className={"all-check-box"}>
-           {cartItems.length === 0 ?  <div>Cart is empty!</div> :  <div>Cart Products:</div>}
+           {cartItems.length === 0 
+            ? ( <div>Cart is empty!</div> ) 
+            : (
+              <Stack flexDirection={"row"}>
+               <div>Cart Products:</div> 
+               <DeleteForeverIcon
+               sx={{ml: "5px", cursor: "pointer"}}
+                color="primary"
+                onClick={()=> onDeleteAll()}/>
+              </Stack>
+            )}
           </Box>
           <Box className={"orders-main-wrapper"}>
             <Box className={"orders-wrapper"}>
@@ -111,12 +129,18 @@ export default function Basket(props:BasketProps) {
               })}
             </Box>
           </Box>
-          <Box className={"basket-order"}>
-            <span className={"price"}>Total: $100 (98 +2)</span>
+           { cartItems.length !== 0 ? (
+            <Box className={"basket-order"}>
+            <span className={"price"}>Total: {totalPrice} ( {itemsPrice}  + {shippingCost})</span>
             <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
               Order
             </Button>
           </Box>
+          ) : (
+            ""
+          )
+          
+        }
         </Stack>
       </Menu>
     </Box>
