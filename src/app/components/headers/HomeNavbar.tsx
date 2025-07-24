@@ -1,6 +1,6 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { CartItem } from "../../../lib/types/search";
 import Basket  from './Basket';
 
@@ -11,29 +11,16 @@ interface HomeNavbarProps {
     onRemove: (item: CartItem) => void;
     onDelete: (item: CartItem) => void;
     onDeleteAll: () => void; 
+    setSignupOpen: (isOpen: boolean) => void;
+    setLoginOpen: (isOpen: boolean) => void;
 
 }
 
 export default function HomeNavbar( props: HomeNavbarProps) {
-    const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props,
-    authMember = null,
-    [count, setCount] = useState<number>(0),
-    [value, setValue] = useState<boolean>(true);
-
-    useEffect(()=>{
-      console.log("componentDidMount");
-        setCount(c => c + 1);
-         return() =>{
-            console.log("componentWillUnmount")
-
-        };
-
-    }, [value])
-    // Handlers
-    const buttonHandler = () => {
-        setValue(!value)
-    }
-
+    const {cartItems, onAdd, onRemove, onDelete, onDeleteAll, setSignupOpen, setLoginOpen} = props,
+    authMember = null;
+    
+    
     return <div className="home-navbar">
        <Container className="navbar-container">
             <Stack className="menu">
@@ -108,7 +95,7 @@ export default function HomeNavbar( props: HomeNavbarProps) {
                  />
                     {!authMember ? (
                         <Box>
-                            <Button variant="contained" className="login-button">Login</Button>
+                           <Button variant="contained" className="login-button" onClick={ ()=> setLoginOpen(true)}>Login</Button>
                         </Box>
                     ) : (
                         <img
@@ -125,10 +112,10 @@ export default function HomeNavbar( props: HomeNavbarProps) {
                 <Box className = {"head-main-txt"}>World's Most delicious Cousine</Box>
                 <Box className = "wel-txt">The Choice, not just a choice</Box>
                 <Box className = "service-txt">24 hours service</Box>
-                <Box className = "service-txt">{count} hours service</Box>
+                <Box className = "service-txt">24 hours service</Box>
                 <Box className = "signup">
                     {!authMember ? (
-                        <Button variant={"contained"} className="signup-button" onClick={buttonHandler}> SIGN UP</Button>
+                        <Button variant={"contained"} className="signup-button" onClick={() => setSignupOpen(true)}> SIGN UP</Button>
                     ) : null} 
                     
                 </Box>

@@ -22,7 +22,7 @@ function App() {
   // Custom hook to manage basket state
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
   const [signupOpen, setSignupOpen]= useState<boolean>(false);
-  const [loginOpen, setLoginOpen]= useState<boolean>(true);
+  const [loginOpen, setLoginOpen]= useState<boolean>(false);
 
 /** HANDLERS */
 const handleSignUpCClose = () => setSignupOpen(false);
@@ -33,12 +33,17 @@ const handleLoginClose = () => setLoginOpen(false);
     onAdd = {onAdd}
     onRemove = {onRemove}
     onDelete = {onDelete}
-    onDeleteAll={onDeleteAll} /> 
-     : <OtherNavbar cartItems = {cartItems}
+    onDeleteAll={onDeleteAll}
+    setSignupOpen={setSignupOpen}
+    setLoginOpen={setLoginOpen} 
+    /> :
+    <OtherNavbar cartItems = {cartItems}
     onAdd = {onAdd}
     onRemove = {onRemove}
     onDelete = {onDelete}
-    onDeleteAll={onDeleteAll} />} 
+    onDeleteAll={onDeleteAll} 
+    setSignupOpen = {setSignupOpen}
+    setLoginOpen = {setLoginOpen}/>} 
       <Routes>
         <Route path="/help" element={<HelpPage />} />
         <Route path="/products" element={<ProductsPage onAdd={onAdd}/>} />
