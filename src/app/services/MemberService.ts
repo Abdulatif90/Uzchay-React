@@ -35,10 +35,10 @@ class MemberService {
     }
   }
 
-  public async signup(input:MemberInput):Promise<Member>{
-    try{
-      const url =  this.path +"/member/signup";
-      const result = await axios.post(url, input, {withCredentials: true});
+  public async signup(input: MemberInput): Promise<Member> {
+    try {
+      const url = this.path + "/member/signup";
+      const result = await axios.post(url, input, { withCredentials: true });
       console.log("signup", result);
 
       const member: Member = result.data.member;
@@ -63,9 +63,21 @@ class MemberService {
       localStorage.setItem("memberData", JSON.stringify(member));
 
       return member;
-    } catch(err) {
-      console.log("Error, login", err)
+       } catch (err) {
+      console.log("Error, login", err);
       throw err;
+    }
+  }
+
+  public async logout(): Promise<void> {
+    try {
+      const url = this.path + "/member/logout";
+      const result = await axios.post(url, {}, { withCredentials: true });
+      console.log("logout", result);
+
+      localStorage.removeItem("memberData");
+    } catch (err) {
+      console.log("Error, logout", err);
     }
   }
 }
