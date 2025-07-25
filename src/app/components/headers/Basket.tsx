@@ -22,7 +22,7 @@ interface BasketProps {
 }
 export default function Basket(props:BasketProps) {
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props
-  const authMember = useGlobals();
+  const {authMember, setOrderBuilder } = useGlobals();
   const navigate = useNavigate();
   
   /** BASKET CALCULATIONS **/
@@ -51,6 +51,7 @@ export default function Basket(props:BasketProps) {
       await order.createOrder(cartItems);
 
       onDeleteAll();
+      setOrderBuilder(new Date());
       navigate("/orders");
     } catch (err) {
       console.log(err);
