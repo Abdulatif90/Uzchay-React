@@ -10,7 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import Basket from "./Basket";
-import { useGlobals } from "../app/hooks/useGlobals";
+import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { Logout } from "@mui/icons-material";
 
@@ -49,7 +49,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         <Stack className="menu">
           <Box>
             <NavLink to={"/"}>
-              <img className="brand-logo" src="/icons/burak.svg" />
+              <img className="brand-logo" src="/icons/burak.svg" alt="Brand Logo" />
             </NavLink>
           </Box>
           <Stack className="links">
@@ -99,6 +99,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 }
                 aria-haspopup={"true"}
                 onClick={handleLogoutClick}
+                alt="User Avatar"
               />
             )}
             <Menu

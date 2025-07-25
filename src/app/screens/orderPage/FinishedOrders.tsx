@@ -27,7 +27,6 @@ export default function FinishedOrders() {
                                     )
                                 })}
                             </Box>
-
                             <Box className={"total-price-box"}>
                                 <Box className={"box-total"}>
                                     <p>Product price</p>
