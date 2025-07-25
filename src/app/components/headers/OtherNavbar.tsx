@@ -36,7 +36,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     onDelete,
     onDeleteAll,
     setLoginOpen,
-    setSignupOpen,
+    // setSignupOpen,
     anchorEl,
     handleCloseLogout,
     handleLogoutClick,
@@ -97,7 +97,6 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                     ? `${serverApi}/${authMember.memberImage}`
                     : "/icons/default-user.svg"
                 }
-                aria-haspopup={"true"}
                 onClick={handleLogoutClick}
                 alt="User Avatar"
               />

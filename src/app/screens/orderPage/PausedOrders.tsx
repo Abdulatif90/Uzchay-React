@@ -28,7 +28,7 @@ interface PausedOrdersProps {
 
 export default function PausedOrders(props: PausedOrdersProps) {
   const { setValue } = props;
-  const { authMember, orderBuilder, setOrderBuilder } = useGlobals();
+  const { authMember, setOrderBuilder } = useGlobals();
   const { pausedOrders } = useSelector(pausedOrdersRetriever);
 
   const deleteOrderHandler = async (e: T) => {

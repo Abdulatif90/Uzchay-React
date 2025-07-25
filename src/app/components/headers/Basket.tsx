@@ -151,14 +151,19 @@ export default function Basket(props:BasketProps) {
           </Box>
            { cartItems.length !== 0 ? (
             <Box className={"basket-order"}>
-            <Button
+              <Box sx={{ mb: 2 }}>
+                <div>
+                  <strong>Total Price:</strong> ${totalPrice}
+                </div>
+              </Box>
+              <Button
                 onClick={proceedOrderHandler}
                 startIcon={<ShoppingCartIcon />}
                 variant={"contained"}
               >
                 Order
               </Button>
-              </Box>
+            </Box>
           ) : (
             <Box className={"empty-cart"}>
               <img src={"/icons/noimage-list.svg"} alt="Empty cart" />

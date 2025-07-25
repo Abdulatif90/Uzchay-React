@@ -14,6 +14,7 @@ import OrderService from "../../services/OrderService";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useGlobals } from "../../hooks/useGlobals";
+import { useNavigate } from "react-router-dom";
 import "../../../css/order.css"
 
 /** REDUX SLICE & SELECTOR **/
@@ -22,23 +23,18 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
   setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
-
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } = actionDispatch(useDispatch());
-  const { orderBuilder } = useGlobals();
+  const {  authMember } = useGlobals();
   const [value, setValue] = useState("1");
-   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+  const [orderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,
   });
+  const navigate = useNavigate();
   
-
-  const handleChange = (e: SyntheticEvent, newValue: string) => {
-    setValue(newValue)
-  }
-
-   useEffect(() => {
+  useEffect(() => {
     const order = new OrderService();
 
     order
@@ -56,6 +52,17 @@ export default function OrdersPage() {
       .then((data) => setFinishedOrders(data))
       .catch((err) => console.log(err));
   }, [orderInquiry, setPausedOrders, setProcessOrders, setFinishedOrders]);
+
+  /** HANDLERS **/
+  const handleChange = (e: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+  useEffect(() => {
+    if (!authMember) {
+      navigate("/");
+    }
+  }, [authMember, navigate]);
 
   return (
     <div className={"order-page"}>

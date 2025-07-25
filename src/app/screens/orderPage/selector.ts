@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { OrdersPageState } from "../../../lib/types/screen";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
