@@ -1,4 +1,4 @@
-import { Route, Routes, RouteMatch } from "react-router-dom";
+import { Route, Routes,  } from "react-router-dom";
 import Products from "./Products";
 import ChosenProducts from "./ChosenProducts";
 import {CartItem} from "../../../lib/types/search";

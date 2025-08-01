@@ -65,7 +65,7 @@ export default function ChosenProduct(props : ChosenProductProps) {
       .getRestaurant()
       .then((data: Member) => setRestaurant(data))
       .catch((err: unknown) => console.log(err));
-  }, [productId, setChosenProduct, setRestaurant]);
+  }, [productId]);
 
   if (!chosenProduct) return null;
 
