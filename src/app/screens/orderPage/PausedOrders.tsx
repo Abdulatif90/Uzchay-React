@@ -2,8 +2,6 @@ import React from "react";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box, Button, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
-import { setPausedOrders } from "./selector";
 import { serverApi } from "../../../lib/config";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
@@ -16,11 +14,6 @@ import { OrderStatus } from "../../../lib/enum/order.enum";
 
 
 /** REDUX SLICE & SELECTOR **/
-const pausedOrdersRetriever = createSelector(
-  setPausedOrders,
-  (pausedOrders) => ({ pausedOrders })
-);
-
 
 interface PausedOrdersProps {
   setValue: (input: string) => void;
@@ -29,7 +22,8 @@ interface PausedOrdersProps {
 export default function PausedOrders(props: PausedOrdersProps) {
   const { setValue } = props;
   const { authMember, setOrderBuilder } = useGlobals();
-  const { pausedOrders } = useSelector(pausedOrdersRetriever);
+  // Get the actual array from Redux store
+  const pausedOrders = useSelector((state: any) => state.ordersPage.pausedOrders);
 
   const deleteOrderHandler = async (e: T) => {
     try {
@@ -81,7 +75,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
    return (
     <TabPanel value={"1"}>
       <Stack>
-        {pausedOrders?.payload?.map((order: Order) => {
+        {pausedOrders?.map((order: Order) => {
           return (
             <Box key={order._id} className={"order-main-box"}>
               <Box className={"order-box-scroll"}>
@@ -152,20 +146,20 @@ export default function PausedOrders(props: PausedOrdersProps) {
           );
         })}
 
-        {!pausedOrders?.payload ||
-          (pausedOrders.payload.length === 0 && (
-            <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-            >
-              <img
-                src={"/icons/noimage-list.svg"}
-                style={{ width: 300, height: 300 }}
-                alt=""
-              />
-            </Box>
-          ))}
+        {/* Fix this part - remove .payload */}
+        {(!pausedOrders || pausedOrders.length === 0) && (
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            justifyContent={"center"}
+          >
+            <img
+              src={"/icons/noimage-list.svg"}
+              style={{ width: 300, height: 300 }}
+              alt=""
+            />
+          </Box>
+        )}
       </Stack>
     </TabPanel>
   );

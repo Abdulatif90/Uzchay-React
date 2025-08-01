@@ -142,6 +142,8 @@ export function Settings() {
                 : "no address"
             }
             value={memberUpdateInput.memberAddress}
+            name="memberAddress"
+            onChange={memberAddressHandler}
           />
         </div>
       </Box>

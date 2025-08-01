@@ -84,14 +84,12 @@ export default function OrdersPage() {
               </Box>
             </Box>
             <Stack className={"order-main-content"}>
-              <PausedOrders setValue={setValue} />
-              <ProcessOrders setValue={setValue} />
-              <FinishedOrders />
+              <PausedOrders setValue={setValue}  />
+              <ProcessOrders setValue={setValue}  />
+              <FinishedOrders  />
             </Stack>
           </TabContext>
         </Stack>
-
-        
         <Stack className={"order-right"}>
         <Box className={"order-info-box"}>
             <Box className={"member-box"}>

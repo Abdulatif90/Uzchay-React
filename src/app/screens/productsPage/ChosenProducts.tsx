@@ -52,13 +52,13 @@ export default function ChosenProduct(props : ChosenProductProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
 
   useEffect(() => {
-    if (!productId) return;
-
-    const product = new ProductService();
-    product
-      .getProduct(productId)
-      .then((data: Product) => setChosenProduct(data))
-      .catch((err: unknown) => console.log(err));
+    if (productId) {
+      const product = new ProductService();
+      product
+        .getProduct(productId)
+        .then((data: Product) => setChosenProduct(data))
+        .catch((err: unknown) => console.log(err));
+    }
 
     const member = new MemberService();
     member
@@ -129,6 +129,7 @@ export default function ChosenProduct(props : ChosenProductProps) {
                       price: chosenProduct.productPrice,
                       quantity: 1,
                     });
+                    e.stopPropagation();
                   }
                 }>
                 Add To Basket
