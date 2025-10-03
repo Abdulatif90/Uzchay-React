@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { setProcessOrders } from "./selector";
+import { retrieveProcessOrders } from "./selector";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { Messages, serverApi } from "../../../lib/config";
@@ -18,7 +18,7 @@ import { sweetErrorHandling } from "../../../lib/sweetAlert";
 /** REDUX SLICE & SELECTOR **/
 
 const processOrdersRetriever = createSelector(
-  setProcessOrders,
+  retrieveProcessOrders,
   (processOrders) => ({ processOrders })
 );
 
@@ -56,7 +56,7 @@ export default function ProcessOrders(props: PausedOrdersProps) {
     return (
         <TabPanel value={"2"}>
             <Stack>
-               {Array.isArray(processOrders?.payload) && processOrders.payload.map((order: Order) => {
+               {processOrders && processOrders.length > 0 ? processOrders.map((order: Order) => {
                     return (
                         <Box key={order._id} className={"order-main-box"}>
                             <Box className={"order-box-scroll"}>
@@ -106,10 +106,7 @@ export default function ProcessOrders(props: PausedOrdersProps) {
                             </Box>
                         </Box>
                     );
-                })}
-
-                {!processOrders?.payload ||
-                 (processOrders.payload.length === 0 && (
+                }) : (
                 <Box
                 display={"flex"}
                 flexDirection={"row"}
@@ -121,7 +118,7 @@ export default function ProcessOrders(props: PausedOrdersProps) {
                     alt=""
                 />
                 </Box>
-          ))}
+          )}
             </Stack>
         </TabPanel>
     )

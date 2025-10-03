@@ -16,7 +16,13 @@ class ProductService {
         url += `&productCollection=${input.productCollection}`;
       if (input.search) url += `&search=${input.search}`;
       console.log("result")
-      const result = await axios.get(url)
+      const result = await axios.get(url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
       console.log("getProducts:", result);
       return result.data;
     } catch (err) {
@@ -27,7 +33,14 @@ class ProductService {
   public async getProduct(productId: string): Promise<Product> {
     try {
       const url = `${this.path}/product/${productId}`;
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, { 
+        withCredentials: true,
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
 
       console.log("getProduct:", result);
 

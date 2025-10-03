@@ -12,7 +12,13 @@ class MemberService {
   public async getTopUsers(): Promise<Member[]> {
     try {
          let url = this.path + "/member/top-users";
-      const result = await axios.get(url);
+      const result = await axios.get(url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
       console.log("getTopUsers:", result);
 
         return result.data;
@@ -24,7 +30,13 @@ class MemberService {
  public async getRestaurant(): Promise<Member> {
     try {
       let url = this.path + "/member/restaurant";
-      const result = await axios.get(url);
+      const result = await axios.get(url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
       console.log("getRestaurant:", result);
 
       const restaurant: Member = result.data;
@@ -88,11 +100,17 @@ class MemberService {
    public async updateMember(input: MemberUpdateInput): Promise<Member> {
     try {
       const formData = new FormData();
-      formData.append("memberNick:", input.memberNick || "");
-      formData.append("memberPhone:", input.memberPhone || "");
-      formData.append("memberAddress:", input.memberAddress || "");
-      formData.append("memberDesc:", input.memberDesc || "");
-      formData.append("memberImage:", input.memberImage || "");
+      formData.append("memberNick", input.memberNick || "");
+      formData.append("memberPhone", input.memberPhone || "");
+      formData.append("memberAddress", input.memberAddress || "");
+      formData.append("memberDesc", input.memberDesc || "");
+      if (input.memberImage) {
+        if (input.memberImage instanceof File) {
+          formData.append("memberImage", input.memberImage);
+        } else {
+          formData.append("memberImage", input.memberImage);
+        }
+      }
 
       const result = await axios(`${serverApi}/member/update`, {
         method: "POST",

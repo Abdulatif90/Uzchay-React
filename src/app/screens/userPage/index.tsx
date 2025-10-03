@@ -23,7 +23,7 @@ export default function UserPage() {
             <Box display={"flex"} flexDirection={"column"}>
               <Box className={"menu-name"}>Modify Member Details</Box>
               <Box className={"menu-content"}>
-                <Settings />
+                <Settings key={authMember?._id || 'no-user'} />
               </Box>
             </Box>
           </Stack>
@@ -39,7 +39,7 @@ export default function UserPage() {
                   <img
                     src={
                       authMember?.memberImage
-                        ? ` ${serverApi}/${authMember.memberImage}`
+                        ? `${serverApi}/${authMember.memberImage}?t=${Date.now()}`
                         : "/icons/default-user.svg"
                     }
                     className={"order-user-avatar"}

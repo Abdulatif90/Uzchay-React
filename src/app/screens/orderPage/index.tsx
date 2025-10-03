@@ -8,24 +8,19 @@ import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
-import { Order, OrderInquiry } from "../../../lib/types/order";
+import { OrderInquiry } from "../../../lib/types/order";
 import {OrderStatus} from "../../../lib/enum/order.enum";
 import OrderService from "../../services/OrderService";
 import { useDispatch } from "react-redux";
-import { Dispatch } from "@reduxjs/toolkit";
 import { useGlobals } from "../../hooks/useGlobals";
 import { useNavigate } from "react-router-dom";
 import "../../../css/order.css"
 
 /** REDUX SLICE & SELECTOR **/
-const actionDispatch = (dispatch: Dispatch) => ({
-  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
-  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
-  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
-});
+
 export default function OrdersPage() {
-  const { setPausedOrders, setProcessOrders, setFinishedOrders } = actionDispatch(useDispatch());
-  const {  authMember } = useGlobals();
+  const dispatch = useDispatch();
+  const {  authMember, orderBuilder } = useGlobals();
   const [value, setValue] = useState("1");
   const [orderInquiry] = useState<OrderInquiry>({
     page: 1,
@@ -39,19 +34,19 @@ export default function OrdersPage() {
 
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-      .then((data) => setPausedOrders(data))
+      .then((data) => dispatch(setPausedOrders(data)))
       .catch((err) => console.log(err));
 
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
-      .then((data) => setProcessOrders(data))
+      .then((data) => dispatch(setProcessOrders(data)))
       .catch((err) => console.log(err));
 
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
-      .then((data) => setFinishedOrders(data))
+      .then((data) => dispatch(setFinishedOrders(data)))
       .catch((err) => console.log(err));
-  }, [orderInquiry, setPausedOrders, setProcessOrders, setFinishedOrders]);
+  }, [orderInquiry, dispatch, orderBuilder]);
 
   /** HANDLERS **/
   const handleChange = (e: SyntheticEvent, newValue: string) => {

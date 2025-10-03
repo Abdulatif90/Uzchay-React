@@ -38,7 +38,7 @@ interface HomeNavbarProps {
     const { authMember } = useGlobals();
 
     return (
-        <div className="home-navbar">
+        <div className=" container home-navbar">
         <Container className="navbar-container">
             <Stack className="menu">
             <Box>
@@ -113,7 +113,7 @@ interface HomeNavbarProps {
                     className="user-avatar"
                     src={
                     authMember?.memberImage
-                        ? `${serverApi}/${authMember.memberImage}`
+                        ? `${serverApi}/${authMember.memberImage}?t=${Date.now()}`
                         : "/icons/default-user.svg"
                     }
                     alt="User Avatar"
@@ -189,6 +189,6 @@ interface HomeNavbarProps {
             </Box>
             </Stack>
         </Container>
-        </div>
+    </div>
     );
-    }
+};

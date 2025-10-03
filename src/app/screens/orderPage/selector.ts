@@ -1,29 +1,19 @@
-import { OrdersPageState } from "../../../lib/types/screen";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { AppRootState } from "../../../lib/types/screen";
 
-const initialState: OrdersPageState = {
-  pausedOrders: [],
-  processOrders: [],
-  finishedOrders: [],
-};
+const selectOrdersPage = (state: AppRootState) => state.ordersPage;
 
-const ordersPageSlice = createSlice({
-  name: "ordersPage",
-  initialState,
-  reducers: {
-    setPausedOrders: (state, action: PayloadAction<any[]>) => {
-      state.pausedOrders = action.payload;
-    },
-    setProcessOrders: (state, action: PayloadAction<any[]>) => {
-      state.processOrders = action.payload;
-    },
-    setFinishedOrders: (state, action: PayloadAction<any[]>) => {
-      state.finishedOrders = action.payload;
-    },
-  },
-});
+export const retrievePausedOrders = createSelector(
+  selectOrdersPage,
+  (OrdersPage) => OrdersPage.pausedOrders
+);
 
-export const { setPausedOrders, setProcessOrders, setFinishedOrders } =
-  ordersPageSlice.actions;
-const OrdersPageReducer = ordersPageSlice.reducer;
-export default OrdersPageReducer;
+export const retrieveProcessOrders = createSelector(
+  selectOrdersPage,
+  (OrdersPage) => OrdersPage.processOrders
+);
+
+export const retrieveFinishedOrders = createSelector(
+  selectOrdersPage,
+  (OrdersPage) => OrdersPage.finishedOrders
+);

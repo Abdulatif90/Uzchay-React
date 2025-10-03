@@ -11,10 +11,16 @@ import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../lib/enum/order.enum";
-
+import { createSelector } from "reselect";
+import { retrievePausedOrders } from "./selector";
 
 
 /** REDUX SLICE & SELECTOR **/
+
+const pausedOrdersRetriever = createSelector(
+  retrievePausedOrders,
+  (pausedOrders) => ({ pausedOrders })
+);
 
 interface PausedOrdersProps {
   setValue: (input: string) => void;
@@ -24,7 +30,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
   const { setValue } = props;
   const { authMember, setOrderBuilder } = useGlobals();
   // Get the actual array from Redux store
-  const pausedOrders = useSelector((state: any) => state.ordersPage.pausedOrders);
+  const { pausedOrders } = useSelector(pausedOrdersRetriever);
 
   const deleteOrderHandler = async (e: T) => {
     try {
