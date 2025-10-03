@@ -85,7 +85,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPassword: memberPassword,
       };
       const member = new MemberService();
-      const result = await member.signup(signupInput);
+      await member.signup(signupInput);
 
       handleSignupClose();
     } catch (err){
@@ -108,12 +108,44 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       };
       const member = new MemberService();
       const result = await member.login(loginInput);
-
+      setAuthMember(result);
+      if (result) {
+        localStorage.setItem("memberData", JSON.stringify(result));
+      } else {
+        localStorage.removeItem("memberData");
+      }
       handleLoginClose();
-    } catch (err){
-      console.log(err)
+      return;
+    } catch (err: any){
+      console.log("Login error full object:", err);
+      console.log("Error response:", err?.response);
+      console.log("Error response data:", err?.response?.data);
+      console.log("Error response status:", err?.response?.status);
+      console.log("Error message:", err?.message);
       handleLoginClose();
-      sweetErrorHandling(err).then();
+      
+      // Check if error indicates user doesn't exist (needs to register first)
+      const errorMessage = err?.response?.data?.message || err?.message || "";
+      console.log("Extracted error message:", errorMessage);
+      
+      const isUserNotFound = err?.response?.status === 404 || 
+                            errorMessage.toLowerCase().includes("not found") ||
+                            (errorMessage.toLowerCase().includes("member") && errorMessage.toLowerCase().includes("nickname")) ||
+                            errorMessage.toLowerCase().includes("user not found") ||
+                            errorMessage.toLowerCase().includes("member not found") ||
+                            errorMessage.toLowerCase().includes("wrong credentials") ||
+                            errorMessage.toLowerCase().includes("invalid credentials");
+      
+      console.log("Is user not found?", isUserNotFound);
+      
+      // Check if this is a "user not found" type error
+      if (err?.response?.status === 401 || err?.response?.status === 404 || err?.response?.status === 400) {
+        // These status codes typically indicate user doesn't exist or wrong credentials
+        sweetErrorHandling(new Error(Messages.error6)).then();
+      } else {
+        // For other errors, show the original error
+        sweetErrorHandling(err).then();
+      }
     }
     }
 

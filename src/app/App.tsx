@@ -10,8 +10,6 @@ import OtherNavbar  from './components/headers/OtherNavbar';
 import Footer from './components/footer';
 import useBasket from './hooks/useBasket';
 import AuthenticationalModal from './components/auth';
-import {CartItem} from '../lib/types/search';
-import { T } from '../lib/types/common';
 import {sweetErrorHandling, sweetTopSuccessAlert} from '../lib/sweetAlert';
 import {Messages} from '../lib/config';
 import {useGlobals} from './hooks/useGlobals';
@@ -27,7 +25,7 @@ import "../css/footer.css"
 
 function App() {
   const location = useLocation();
-  const { authMember, setAuthMember } = useGlobals();
+  const {  setAuthMember } = useGlobals();
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
   const [signupOpen, setSignupOpen]= useState<boolean>(false);
   const [loginOpen, setLoginOpen]= useState<boolean>(false);

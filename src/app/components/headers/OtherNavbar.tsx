@@ -94,7 +94,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 className="user-avatar"
                 src={
                   authMember?.memberImage
-                    ? `${serverApi}/${authMember.memberImage}`
+                    ? `${serverApi}/${authMember.memberImage}?t=${Date.now()}`
                     : "/icons/default-user.svg"
                 }
                 onClick={handleLogoutClick}

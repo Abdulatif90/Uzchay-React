@@ -5,10 +5,17 @@ import { useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { Order, OrderItem } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
+import { createSelector } from "reselect";
+import { retrieveFinishedOrders } from "./selector";
+
+const finishedOrdersRetriever = createSelector(
+  retrieveFinishedOrders,
+  (finishedOrders) => ({ finishedOrders })
+);
 
 export default function FinishedOrders() {
   // Get the actual array from Redux store (not .payload)
-  const finishedOrders = useSelector((state: any) => state.ordersPage.finishedOrders);
+  const { finishedOrders } = useSelector(finishedOrdersRetriever);
 
   return (
     <TabPanel value={"3"}>

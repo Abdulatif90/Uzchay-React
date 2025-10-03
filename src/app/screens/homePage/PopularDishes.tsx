@@ -53,6 +53,7 @@ export default function PopularDishes() {
                             textColor="#fff"
                             fontSize={"lg"}
                             mb={1}
+                            justifyContent={"space-between"}
                           >
                             {ele.productName}
                           </Typography>

@@ -5,7 +5,6 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Badge from "@mui/material/Badge";
 import Pagination from "@mui/material/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "@reduxjs/toolkit";
 import { setProducts } from "./slice";
 import { Product, ProductInquiry } from "../../../lib/types/product";
 import { createSelector } from "reselect";
@@ -20,10 +19,6 @@ import { CartItem } from "../../../lib/types/search";
 
 
 /** REDUX SLICE & SELECTOR **/
-const actionDispatch = (dispatch: Dispatch) => ({
-    
-  setProducts: (data: Product[]) => dispatch(setProducts(data)),
-});
 
 const productsRetriever = createSelector(retrieveProducts, (products) => ({
     products,
@@ -36,7 +31,7 @@ interface ProductsProps {
 
 export default function Products( props: ProductsProps) {
   const {onAdd} = props;
-  const { setProducts } = actionDispatch(useDispatch());
+  const dispatch = useDispatch();
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
@@ -53,16 +48,15 @@ export default function Products( props: ProductsProps) {
     const product = new ProductService();
     product
       .getProducts(productSearch)
-      .then((data) => setProducts(data))
+      .then((data) => dispatch(setProducts(data)))
       .catch((err) => console.log(err));
-  }, [productSearch, setProducts])
+  }, [productSearch, dispatch])
 
     useEffect(() => {
     if (searchText === "") {
-      productSearch.search = "";
-      setProductSearch({ ...productSearch });
+      setProductSearch(prev => ({ ...prev, search: "" }));
     }
-  }, [searchText, productSearch]);
+  }, [searchText]);
 
     /** HANDLERS **/
 
@@ -228,13 +222,23 @@ export default function Products( props: ProductsProps) {
                     <Stack
                       key={product._id}
                       className="product-card"
-                      onClick={() => chooseDishHandler(product._id)}
                     >
                       <Stack
                         className="product-img"
                         sx={{
                           background: `url(${imagePath})`,
                         }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onAdd({
+                            _id: product._id,
+                            quantity: 1,
+                            name: product.productName,
+                            price: product.productPrice,
+                            image: product.productImages[0],
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
                       >
                         <div className="prodct-sale">{sizeVolume}</div>
                         <Button className="shop-btn" onClick={(e) => {
@@ -249,7 +253,10 @@ export default function Products( props: ProductsProps) {
                         }}> 
                           <img src={"/icons/shopping-cart.svg"} alt="" />
                         </Button>
-                        <Button className="view-btn">
+                        <Button className="view-btn" onClick={(e) => {
+                          e.stopPropagation();
+                          chooseDishHandler(product._id);
+                        }}>
                           <Badge
                             badgeContent={product.productViews}
                             color="secondary"
@@ -263,7 +270,7 @@ export default function Products( props: ProductsProps) {
                           </Badge>
                         </Button>
                           </Stack>
-                      <Box className="product-desc">
+                      <Box className="product-desc" onClick={() => chooseDishHandler(product._id)} style={{ cursor: 'pointer' }}>
                         <span className="product-title">
                           {product.productName}
                         </span>
