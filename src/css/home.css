@@ -97,6 +97,15 @@ gap: 10px;
     min-height: 430px;
     min-width: 300px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+/* Popular dishes card hover effect */
+.homepage .popular-dishes-frame .popular-section .cards-frame .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 .homepage .popular-dishes-frame .popular-section .cards-frame .card .card-cover{
    background: linear-gradient(
@@ -153,6 +162,15 @@ justify-content: space-between;
     height: 335px;
     width: 290px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+/* New products card hover effect */
+.homepage .new-products-frame .main .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 .homepage .new-products-frame  .product-sale{
     position: absolute;
@@ -291,7 +309,16 @@ justify-content: space-between;
     height: auto;
     width: 305px;
     cursor: pointer;
-    border-color: #f8f8ff;  
+    border-color: #f8f8ff;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+/* Active users card hover effect */
+.homepage .active-users-frame .main .cards-frame .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .homepage .active-users-frame .main .cards-frame .card .card-detail {
@@ -400,6 +427,9 @@ justify-content: space-between;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
   }
   
   .homepage .events-frame .events-img {
@@ -408,6 +438,13 @@ justify-content: space-between;
     display: flex;
     border-radius: 10px;
     background-size: cover;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+  }
+
+  /* Events image hover effect */
+  .homepage .events-frame .events-info-frame:hover .events-img {
+    transform: scale(1.05);
   }
   
   .homepage .events-frame .events-desc {
