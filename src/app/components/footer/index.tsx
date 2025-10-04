@@ -28,13 +28,25 @@ export default function Footer() {
               creates an illusion with its cuisine.
             </Box>
             <Box className="sns-context">
-              <img src={"/icons/facebook.svg"} alt="Facebook" />
-              <img src={"/icons/twitter.svg"} alt="Twitter" />
-              <img src={"/icons/instagram.svg"} alt="Instagram" />
-              <img src={"/icons/youtube.svg"} alt="YouTube" />
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                <img src={"/icons/facebook.svg"} className="sns-icon" alt="Facebook"
+                 />
+              </a>
+              <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
+                <img src={"/icons/twitter.svg"} className="sns-icon" alt="Twitter"
+                />
+              </a>
+              <a href="https://www.instagram.com/sharipovabdulatif/" target="_blank" rel="noopener noreferrer">
+                <img src={"/icons/instagram.svg"} className="sns-icon" alt="Instagram"
+                />
+              </a>
+              <a href="https://youtube.com/@aiscenes" target="_blank" rel="noopener noreferrer">
+                <img src={"/icons/youtube.svg"}  className="sns-icon" alt="YouTube" 
+                />
+              </a>
             </Box>
           </Stack>
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"} gap={30} >
+          <Stack sx={{ ml: "288px" }} flexDirection={"row"} gap={30} mt={5}> 
             <Stack>
               <Box>
                 <Box className={"foot-category-title"}>Sections</Box>

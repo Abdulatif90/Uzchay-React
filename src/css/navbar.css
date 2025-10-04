@@ -149,10 +149,11 @@ line-height: normal;
   .home-navbar .navbar-container .logo-frame .logo-img {
    width: 100%;
    height: 550px;
-   background: url("/public/img/mealsd.jpg");
+   background: url("/public/img/uzss.jpg");
    background-size: contain; 
    background-repeat: no-repeat;
    margin-top: -75px ;
+   border-radius: 30px;
  }
 
 

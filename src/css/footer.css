@@ -16,6 +16,19 @@
   justify-content: space-between;
 }
 
+.sns-icon {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.sns-icon:hover {
+  filter: invert(42%) sepia(98%) saturate(3000%) hue-rotate(200deg) brightness(100%) contrast(95%);
+  transform: scale(1.1);
+}
+
 .foot-category-title {
   width: 106px;
   font-family: "Poppins";

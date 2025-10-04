@@ -314,16 +314,13 @@ export default function Products( props: ProductsProps) {
         <Box className="brand-text">Our Family Brands</Box>
         <Stack className="brand-cards">
           <Box className="brand-card">
-            <img src="/img/gurme.webp" alt="" />
+            <img src="/img/mealdonor.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/seafood.webp" alt="" />
+            <img src="/img/threewomen.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/sweets.webp" alt="" />
-          </Box>
-          <Box className="brand-card">
-            <img src="/img/doner.webp" alt="" />
+            <img src="/img/Uzchaysweetseafood.jpg" alt="" />
           </Box>
         </Stack>
       </div>

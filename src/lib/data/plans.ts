@@ -5,7 +5,7 @@ export const plans = [
 		author: 'Chef Deming',
 		date: '30 min ago',
 		location: 'Uzbekistan, Fargona',
-		img: '/img/discount.webp',
+		img: '/img/Special.jpg',
 	},
 	{
 		title: 'Coming Soon',
@@ -21,7 +21,7 @@ export const plans = [
 		author: 'Morgan News',
 		date: '5 days ago',
 		location: 'USA, Florida',
-		img: '/img/coming.webp',
+		img: '/img/kebab-fresh.webp',
 	},
 	{
 		title: 'Join us on sns',
