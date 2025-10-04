@@ -91,10 +91,10 @@ export default function Products( props: ProductsProps) {
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className="avatar-big-box">
-            <Stack className="top-title">
-              <Box className="top-text">Burak Restaurant</Box>
-              <Box className="single-search">
-                <input
+            <Stack className="top-title" mt={3}>
+              <Box className="top-text" >UzChay Restaurant</Box>
+              <Box className="single-search" ml={3}>
+                <input 
                   type={"search"}
                   className="single-search-input"
                   name={"singleResearch"}

@@ -4,7 +4,7 @@ export const plans = [
 		desc: 'Each Friday we deliver highest discounts',
 		author: 'Chef Deming',
 		date: '30 min ago',
-		location: 'Turkey, Istambul',
+		location: 'Uzbekistan, Fargona',
 		img: '/img/discount.webp',
 	},
 	{
@@ -12,7 +12,7 @@ export const plans = [
 		desc: 'Be ready for fresh Arrivals from Monday!',
 		author: 'Belissimo Arthur',
 		date: '2 days ago',
-		location: 'Turkey, Istambul',
+		location: 'Uzbekistan, Andijan',
 		img: '/img/fresh.webp',
 	},
 	{

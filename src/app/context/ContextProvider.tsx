@@ -14,6 +14,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     try {
       initialMember = JSON.parse(memberData);
       console.log("Parsed initialMember:", initialMember);
+      console.log("initialMember keys:", initialMember ? Object.keys(initialMember) : "null");
+      console.log("initialMember.memberNick:", initialMember?.memberNick);
+      console.log("initialMember.memberPhone:", initialMember?.memberPhone);
     } catch (e) {
       console.error("Error parsing memberData:", e);
       initialMember = null;

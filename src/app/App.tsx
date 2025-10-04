@@ -73,7 +73,6 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
-          setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
           anchorEl={anchorEl}
           handleLogoutClick={handleLogoutClick}

@@ -38,12 +38,12 @@ interface HomeNavbarProps {
     const { authMember } = useGlobals();
 
     return (
-        <div className=" container home-navbar">
+        <div className="container home-navbar">
         <Container className="navbar-container">
             <Stack className="menu">
             <Box>
                 <NavLink to={"/"}>
-                <img className="brand-logo" src="/icons/burak.svg" alt="Brand Logo"/>
+                <img className="brand-logo" src="/icons/UzChay.png  " alt="UzChay Logo"/>
                 </NavLink>
             </Box>
             <Stack className="links">
@@ -183,8 +183,8 @@ interface HomeNavbarProps {
                     </Button>
                 ) : null}
                 </Box>
-            </Stack>
-            <Box className="logo-frame">
+            </Stack >
+            <Box className="logo-frame" ml={20}>
                 <div className="logo-img"></div>
             </Box>
             </Stack>

@@ -21,7 +21,10 @@ export function Settings() {
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   console.log("authMember in Settings:", authMember);
+  console.log("authMember full object:", JSON.stringify(authMember, null, 2));
+  console.log("memberNick from authMember:", authMember?.memberNick);
   console.log("memberPhone from authMember:", authMember?.memberPhone);
+  console.log("All authMember keys:", authMember ? Object.keys(authMember) : "no authMember");
   console.log("memberUpdateInput initial state will be:", {
     memberNick: authMember?.memberNick || "",
     memberPhone: authMember?.memberPhone || "",

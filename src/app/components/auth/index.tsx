@@ -85,7 +85,14 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPassword: memberPassword,
       };
       const member = new MemberService();
-      await member.signup(signupInput);
+      const result = await member.signup(signupInput);
+      
+      console.log("Signup result:", result);
+      console.log("Signup result phone:", result?.memberPhone);
+      
+      // Set authMember in context after successful signup
+      setAuthMember(result);
+       
 
       handleSignupClose();
     } catch (err){
@@ -97,57 +104,58 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   };
 
   const handleLoginRequest = async () => {
-    try{
-      console.log("inputs:", memberNick, memberPassword);
-      const isfullfil = memberNick !== "" && memberPassword !== "";
-      if(!isfullfil) throw new Error(Messages.error3);
+    try {
+      const isFulfill = memberNick !== "" && memberPassword !== "";
+      if (!isFulfill) throw new Error(Messages.error3);
 
       const loginInput: LoginInput = {
         memberNick: memberNick,
         memberPassword: memberPassword,
       };
+
       const member = new MemberService();
       const result = await member.login(loginInput);
-      setAuthMember(result);
-      if (result) {
-        localStorage.setItem("memberData", JSON.stringify(result));
-      } else {
-        localStorage.removeItem("memberData");
+      
+      console.log("Login result:", result);
+      
+      // Get existing memberData from localStorage
+      let existingMemberData = {};
+      try {
+        const storedData = localStorage.getItem("memberData");
+        if (storedData) {
+          existingMemberData = JSON.parse(storedData);
+          console.log("Existing memberData from localStorage:", existingMemberData);
+        }
+      } catch (e) {
+        console.log("Error parsing existing memberData:", e);
       }
+      
+      // Merge existing data with new login result, prioritizing updated fields
+      const mergedMemberData = {
+        ...existingMemberData,
+        ...result,
+        // Ensure key fields are mapped correctly
+        memberNick: result.memberNick || "",
+        memberPhone: result.memberPhone || "",
+        memberAddress: result.memberAddress || "",
+        memberDesc: result.memberDesc || "",
+      };
+      
+      console.log("Merged memberData:", mergedMemberData);
+      console.log("Merged memberData phone:", mergedMemberData.memberPhone);
+      
+      // Update localStorage with merged data
+      localStorage.setItem("memberData", JSON.stringify(mergedMemberData));
+      
+      setAuthMember(mergedMemberData);
       handleLoginClose();
-      return;
-    } catch (err: any){
-      console.log("Login error full object:", err);
-      console.log("Error response:", err?.response);
-      console.log("Error response data:", err?.response?.data);
-      console.log("Error response status:", err?.response?.status);
-      console.log("Error message:", err?.message);
+    } catch (err) {
+      console.log(err);
       handleLoginClose();
-      
-      // Check if error indicates user doesn't exist (needs to register first)
-      const errorMessage = err?.response?.data?.message || err?.message || "";
-      console.log("Extracted error message:", errorMessage);
-      
-      const isUserNotFound = err?.response?.status === 404 || 
-                            errorMessage.toLowerCase().includes("not found") ||
-                            (errorMessage.toLowerCase().includes("member") && errorMessage.toLowerCase().includes("nickname")) ||
-                            errorMessage.toLowerCase().includes("user not found") ||
-                            errorMessage.toLowerCase().includes("member not found") ||
-                            errorMessage.toLowerCase().includes("wrong credentials") ||
-                            errorMessage.toLowerCase().includes("invalid credentials");
-      
-      console.log("Is user not found?", isUserNotFound);
-      
-      // Check if this is a "user not found" type error
-      if (err?.response?.status === 401 || err?.response?.status === 404 || err?.response?.status === 400) {
-        // These status codes typically indicate user doesn't exist or wrong credentials
-        sweetErrorHandling(new Error(Messages.error6)).then();
-      } else {
-        // For other errors, show the original error
-        sweetErrorHandling(err).then();
-      }
+      sweetErrorHandling(err).then();
     }
-    }
+  };
+
 
   return (
     <div>

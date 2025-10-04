@@ -17,10 +17,10 @@ export default function Footer() {
   return (
     <Footers>
       <Container>
-        <Stack flexDirection={"row"} sx={{ mt: "94px" }}>
+        <Stack flexDirection={"row"} sx={{ mt: "94px" }} >
           <Stack flexDirection={"column"} style={{ width: "340px" }}>
             <Box>
-              <img width={"100px"} src={"/icons/burak.svg"} alt="Burak Logo" />
+              <img width={"200px"} src={"/icons/UzChay.png"} alt="UzChay Logo" />
             </Box>
             <Box className={"foot-desc-txt"}>
               Focusing on the UzChay as well as the youth society,
@@ -34,7 +34,7 @@ export default function Footer() {
               <img src={"/icons/youtube.svg"} alt="YouTube" />
             </Box>
           </Stack>
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"}>
+          <Stack sx={{ ml: "288px" }} flexDirection={"row"} gap={30} >
             <Stack>
               <Box>
                 <Box className={"foot-category-title"}>Sections</Box>
@@ -46,7 +46,7 @@ export default function Footer() {
                 </Box>
               </Box>
             </Stack>
-            <Stack sx={{ ml: "100px" }}>
+            <Stack sx={{ ml: "100px" }} >
               <Box>
                 <Box className={"foot-category-title"}>Find us</Box>
                 <Box
@@ -81,7 +81,7 @@ export default function Footer() {
           sx={{ mt: "80px" }}
         ></Stack>
         <Stack className={"copyright-txt"}>
-          © Copyright Devex Global, All rights reserved.
+          © Copyright A.Sharipov, All rights reserved.
         </Stack>
       </Container>
     </Footers>

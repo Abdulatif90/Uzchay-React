@@ -20,7 +20,6 @@ interface OtherNavbarProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
-  setSignupOpen: (isOpen: boolean) => void;
   setLoginOpen: (isOpen: boolean) => void;
   anchorEl: HTMLElement | null;
   handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -36,7 +35,6 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     onDelete,
     onDeleteAll,
     setLoginOpen,
-    // setSignupOpen,
     anchorEl,
     handleCloseLogout,
     handleLogoutClick,
@@ -49,7 +47,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         <Stack className="menu">
           <Box>
             <NavLink to={"/"}>
-              <img className="brand-logo" src="/icons/burak.svg" alt="Brand Logo" />
+              <img className="brand-logo" src="/icons/UzChay.png" alt="UzChay Logo" />
             </NavLink>
           </Box>
           <Stack className="links">
