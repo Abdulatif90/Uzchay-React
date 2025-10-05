@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Footers = styled.div`
   width: 100%;
-  height: 590px;
+  height: 100%;
   display: flex;
   background: #343434;
   background-size: cover;
@@ -13,21 +13,39 @@ const Footers = styled.div`
 
 export default function Footer() {
   const authMember = null;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Footers>
       <Container>
-        <Stack flexDirection={"row"} sx={{ mt: "94px" }} >
-          <Stack flexDirection={"column"} style={{ width: "340px" }}>
-            <Box>
-              <img width={"200px"} src={"/icons/UzChay.png"} alt="UzChay Logo" />
+        <Stack 
+          flexDirection={isMobile ? "column" : "row"} 
+          sx={{ mt: isMobile ? "40px" : "94px" }}
+          spacing={isMobile ? 4 : 0}
+        >
+          <Stack flexDirection={"column"} style={{ width: isMobile ? "100%" : "340px" }}>
+            <Box textAlign={isMobile ? "center" : "left"}>
+              <img 
+                width={isMobile ? "150px" : "200px"} 
+                src={"/icons/UzChay.png"} 
+                alt="UzChay Logo" 
+              />
             </Box>
-            <Box className={"foot-desc-txt"}>
+            <Box 
+              className={"foot-desc-txt"}
+              textAlign={isMobile ? "center" : "left"}
+              px={isMobile ? 2 : 0}
+            >
               Focusing on the UzChay as well as the youth society,
               UzChay aims to bring Uzbek cuisine back. UzChay
               creates an illusion with its cuisine.
             </Box>
-            <Box className="sns-context">
+            <Box 
+              className="sns-context"
+              justifyContent={isMobile ? "center" : "flex-start"}
+              display="flex"
+            >
               <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                 <img src={"/icons/facebook.svg"} className="sns-icon" alt="Facebook"
                  />
@@ -36,18 +54,27 @@ export default function Footer() {
                 <img src={"/icons/twitter.svg"} className="sns-icon" alt="Twitter"
                 />
               </a>
-              <a href="https://www.instagram.com/sharipovabdulatif/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                 <img src={"/icons/instagram.svg"} className="sns-icon" alt="Instagram"
                 />
               </a>
-              <a href="https://youtube.com/@aiscenes" target="_blank" rel="noopener noreferrer">
+              <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer">
                 <img src={"/icons/youtube.svg"}  className="sns-icon" alt="YouTube" 
                 />
               </a>
             </Box>
           </Stack>
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"} gap={30} mt={5}> 
-            <Stack>
+          <Stack 
+            sx={{ 
+              ml: isMobile ? 0 : "288px",
+              mt: isMobile ? 0 : 5,
+              gap: isMobile ? 2 : 30
+            }} 
+            flexDirection={"row"}
+            alignItems={isMobile ? "flex-start" : "flex-start"}
+            justifyContent={isMobile ? "space-between" : "flex-start"}
+          > 
+            <Stack textAlign={isMobile ? "left" : "left"} flex={isMobile ? 1 : 0}>
               <Box>
                 <Box className={"foot-category-title"}>Sections</Box>
                 <Box className={"foot-category-link"}>
@@ -58,7 +85,11 @@ export default function Footer() {
                 </Box>
               </Box>
             </Stack>
-            <Stack sx={{ ml: "100px" }} >
+            <Stack 
+              sx={{ ml: isMobile ? 0 : "100px" }}
+              textAlign={isMobile ? "left" : "left"}
+              flex={isMobile ? 1 : 0}
+            >
               <Box>
                 <Box className={"foot-category-title"}>Find us</Box>
                 <Box
@@ -90,9 +121,13 @@ export default function Footer() {
         </Stack>
         <Stack
           style={{ border: "1px solid #C5C8C9", width: "100%", opacity: "0.2" }}
-          sx={{ mt: "80px" }}
+          sx={{ mt: isMobile ? "40px" : "80px" }}
         ></Stack>
-        <Stack className={"copyright-txt"}>
+        <Stack 
+          className={"copyright-txt"}
+          textAlign={isMobile ? "center" : "left"}
+          sx={{ pb: isMobile ? 2 : 0 }}
+        >
           © Copyright A.Sharipov, All rights reserved.
         </Stack>
       </Container>

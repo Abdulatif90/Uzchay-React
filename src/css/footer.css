@@ -105,3 +105,74 @@
 .foot-category-title:hover:after {
   transform: scaleX(1);
 }
+
+/* RESPONSIVE DESIGN */
+
+/* Tablet and below */
+@media (max-width: 900px) {
+  .foot-desc-txt {
+    font-size: 14px;
+    line-height: 24px;
+    margin-top: 16px;
+  }
+  
+  .foot-category-title {
+    font-size: 20px;
+  }
+  
+  .foot-category-link {
+    height: auto;
+    gap: 10px;
+  }
+  
+  .sns-context {
+    width: 160px;
+    margin: 20px auto;
+    gap: 10px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  .foot-desc-txt {
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 12px;
+    text-align: center;
+  }
+  
+  .foot-category-title {
+    font-size: 16px;
+    width: auto;
+    text-align: left;
+  }
+  
+  .foot-category-link {
+    margin-top: 15px;
+    height: auto;
+    gap: 8px;
+    text-align: left;
+  }
+  
+  .sns-context {
+    width: 140px;
+    margin: 15px auto;
+    justify-content: center;
+  }
+  
+  .sns-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .find-us {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  
+  .copyright-txt {
+    font-size: 12px;
+    text-align: center;
+    padding: 15px 10px;
+  }
+}

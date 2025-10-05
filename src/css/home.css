@@ -91,6 +91,8 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 gap: 10px;
+flex-wrap: nowrap;
+overflow-x: auto;
 
 }
 .homepage .popular-dishes-frame .popular-section .cards-frame .card{
@@ -154,8 +156,11 @@ gap: 10px;
 .homepage .new-products-frame .main .cards-frame{
 width: 100%;
 margin: 47px 2px 2px 2px;
+display: flex;
 flex-direction: row;
 justify-content: space-between;
+flex-wrap: wrap;
+gap: 20px;
 }
 
 .homepage .new-products-frame  .main .card{
@@ -301,8 +306,11 @@ justify-content: space-between;
 .homepage .active-users-frame .main .cards-frame {
     width: 100%;
     margin: 47px 2px 2px 2px;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .homepage .active-users-frame .main .cards-frame .card {
@@ -359,7 +367,7 @@ justify-content: space-between;
 .homepage .events-frame {
       width: 100%;
     height: auto;
-    min-height: 645px;
+    min-height: 650px;
     display: flex;
     flex-direction: column;
     background: #f8f8ff;
@@ -402,7 +410,7 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
     width: 250px;
-    margin: 40px 0 40px 0;
+    margin: 180px 0 40px 0;
     height: 25px;
   }
   
@@ -414,7 +422,7 @@ justify-content: space-between;
   
   .homepage .events-frame .events-main .events-info {
     width: 90%;
-    height: 80%;
+    height: 300px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -423,7 +431,7 @@ justify-content: space-between;
   .homepage .events-frame .events-info .events-info-frame {
     position: relative;
     width: 500px;
-    height: 100%;
+    height: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -453,11 +461,12 @@ justify-content: space-between;
     padding: 10px;
     display: flex;
     width: 90%;
-    height: auto;
+    height: 30%;
     bottom: 5px;
     background: #f8f8ff;
     box-shadow: 0px 40px 30px rgba(25, 25, 46, 0.04);
     border-radius: 8px;
+    box-sizing: border-box;
   }
   
   .homepage .events-frame .events-desc .events-bott {
@@ -556,3 +565,175 @@ justify-content: space-between;
     background: #343434;
     border-radius: 50%;
   }
+
+/* RESPONSIVE DESIGN */
+
+/* Large screens (desktop) - 4 columns */
+@media (min-width: 901px) {
+  .homepage .popular-dishes-frame .popular-section .cards-frame {
+    flex-wrap: nowrap;
+    overflow-x: visible;
+  }
+  
+  .homepage .popular-dishes-frame .popular-section .cards-frame .card {
+    min-width: 300px;
+    flex: 0 0 calc(25% - 10px);
+  }
+  
+  .homepage .new-products-frame .main .card {
+    width: 290px;
+    flex: 0 0 calc(25% - 15px);
+  }
+  
+  .homepage .active-users-frame .main .cards-frame .card {
+    width: 305px;
+    flex: 0 0 calc(25% - 15px);
+  }
+}
+
+/* Tablet and below - 2 columns */
+@media (max-width: 900px) {
+  .homepage .popular-dishes-frame .popular-section .cards-frame {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  .homepage .popular-dishes-frame .popular-section .cards-frame .card {
+    min-width: 280px;
+    flex: 0 0 calc(50% - 10px);
+  }
+  
+  .homepage .new-products-frame .main .cards-frame {
+    justify-content: center;
+  }
+  
+  .homepage .new-products-frame .main .card {
+    width: 280px;
+    flex: 0 0 calc(50% - 10px);
+  }
+  
+  .homepage .active-users-frame .main .cards-frame {
+    justify-content: center;
+  }
+  
+  .homepage .active-users-frame .main .cards-frame .card {
+    width: 280px;
+    flex: 0 0 calc(50% - 10px);
+  }
+  
+  /* Events tablet optimization */
+  .homepage .events-frame .events-info .events-info-frame {
+    width: 400px;
+    height: 250px;
+  }
+  
+  .homepage .events-frame .events-desc {
+    padding: 12px;
+  }
+  
+  .homepage .events-frame .bott-left .text-desc {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  
+  .homepage .events-frame .bott-info .bott-info-main {
+    font-size: 12px;
+  }
+}
+
+/* Mobile devices - 2 columns smaller */
+@media (max-width: 600px) {
+  .homepage .popular-dishes-frame .popular-section .cards-frame {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  .homepage .popular-dishes-frame .popular-section .cards-frame .card {
+    min-width: 200px;
+    min-height: 250px;
+    flex: 0 0 200px;
+  }
+  
+  .homepage .new-products-frame .main .card {
+    width: 150px;
+    height: 250px;
+    flex: 0 0 calc(50% - 5px);
+  }
+  
+  .homepage .active-users-frame .main .cards-frame .card {
+    width: 150px;
+    flex: 0 0 calc(50% - 5px);
+  }
+  
+  .homepage .static-frame .info {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .homepage .static-frame .info .static-box {
+    width: 150px;
+    height: 80px;
+  }
+  
+  .homepage .static-frame .info .static-box .static-num {
+    font-size: 36px;
+    line-height: 50px;
+  }
+  
+  .homepage .static-frame .info .static-box .static-text {
+    font-size: 16px;
+  }
+  
+  /* Events mobile optimization */
+  .homepage .events-frame .events-info .events-info-frame {
+    width: 300px;
+    height: 200px;
+  }
+  
+  .homepage .events-frame .events-desc {
+    padding: 8px;
+    bottom: 3px;
+  }
+  
+  .homepage .events-frame .bott-left .event-title-speaker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .homepage .events-frame .event-title-speaker strong {
+    font-size: 14px;
+  }
+  
+  .homepage .events-frame .event-organizator .spec-text-author {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  
+  .homepage .events-frame .bott-left .text-desc {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 5px;
+  }
+  
+  .homepage .events-frame .bott-left .bott-info {
+    margin-top: 5px;
+    flex-direction: column;
+    gap: 3px;
+    height: auto;
+  }
+  
+  .homepage .events-frame .bott-info .bott-info-main {
+    margin-left: 0;
+    font-size: 10px;
+  }
+  
+  .homepage .events-frame .bott-info .bott-info-main img {
+    width: 12px;
+    margin-right: 5px;
+  }
+}
