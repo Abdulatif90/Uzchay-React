@@ -12,7 +12,7 @@ return (
         data-video-media = ""
         
         >
-            <source type="video/mov" src="video/46.mov"/>
+            <source type="video/mp4" src="video/46.mp4"/>
         </video>
     </div>
 );

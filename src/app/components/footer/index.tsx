@@ -69,7 +69,7 @@ export default function Footer() {
                 >
                   <Box flexDirection={"row"} className={"find-us"}>
                     <span>L.</span>
-                    <div>Downtown, Dubai</div>
+                    <div>Seoul, S.Korea</div>
                   </Box>
                   <Box className={"find-us"}>
                     <span>P.</span>
