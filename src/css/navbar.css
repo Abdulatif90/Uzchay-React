@@ -501,11 +501,18 @@ line-height: normal;
     width: 120px !important;
     margin-top: 10px !important;
   }
+  .home-navbar .navbar-container .logo-frame .logo-img {
+    height: 290px;
+  }
   
   .other-navbar .navbar-container .menu .brand-logo {
     height: 80px;
     width: 120px;
     margin-top: 10px;
+  }
+  .home-navbar .navbar-container .header-frame {
+    margin-top: 0px;
+    height: auto;
   }
   
   .home-navbar .navbar-container .header-frame .detail .head-main-txt {
