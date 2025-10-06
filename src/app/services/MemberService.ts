@@ -55,12 +55,10 @@ class MemberService {
 
       const member: Member = result.data.member;
       console.log("member:", member);
-      if (typeof member !== 'undefined' && member !== null) {
-        localStorage.setItem("memberData", JSON.stringify(member));
-      } else {
-        localStorage.removeItem("memberData");
-      }
-
+      
+      // Don't automatically store member data in localStorage after signup
+      // User should login manually after signup to set localStorage
+      
       return member;
     } catch(err) {
       console.log("Error, signup", err)

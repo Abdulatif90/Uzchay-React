@@ -10,7 +10,7 @@ import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetTopSuccessAlert } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,14 +85,18 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPassword: memberPassword,
       };
       const member = new MemberService();
-      const result = await member.signup(signupInput);
+      await member.signup(signupInput);
       
-      console.log("Signup result:", result);
-      console.log("Signup result phone:", result?.memberPhone);
+      // Clear form fields after successful signup
+      setMemberNick("");
+      setMemberPhone("");
+      setMemberPassword("");
       
-      // Set authMember in context after successful signup
-      setAuthMember(result);
-       
+      // Don't automatically log in after signup
+      // User should manually login after signup
+      
+      // Show success message
+      await sweetTopSuccessAlert(`Welcome ${memberNick}! Account created successfully! Please login to continue.`, 3000);
 
       handleSignupClose();
     } catch (err){
@@ -104,58 +108,67 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   };
 
   const handleLoginRequest = async () => {
-    try {
-      const isFulfill = memberNick !== "" && memberPassword !== "";
-      if (!isFulfill) throw new Error(Messages.error3);
+    try{
+      console.log("inputs:", memberNick, memberPassword);
+
+      const isfullfil = memberNick !== "" && memberPassword !== "";
+      if(!isfullfil) throw new Error(Messages.error3);
 
       const loginInput: LoginInput = {
         memberNick: memberNick,
         memberPassword: memberPassword,
       };
-
       const member = new MemberService();
       const result = await member.login(loginInput);
-      
-      console.log("Login result:", result);
-      
-      // Get existing memberData from localStorage
-      let existingMemberData = {};
-      try {
-        const storedData = localStorage.getItem("memberData");
-        if (storedData) {
-          existingMemberData = JSON.parse(storedData);
-          console.log("Existing memberData from localStorage:", existingMemberData);
-        }
-      } catch (e) {
-        console.log("Error parsing existing memberData:", e);
+      setAuthMember(result);
+      if (result) {
+        localStorage.setItem("memberData", JSON.stringify(result));
+      } else {
+        localStorage.removeItem("memberData");
       }
       
-      // Merge existing data with new login result, prioritizing updated fields
-      const mergedMemberData = {
-        ...existingMemberData,
-        ...result,
-        // Ensure key fields are mapped correctly
-        memberNick: result.memberNick || "",
-        memberPhone: result.memberPhone || "",
-        memberAddress: result.memberAddress || "",
-        memberDesc: result.memberDesc || "",
-      };
+      // Clear form fields after successful login
+      setMemberNick("");
+      setMemberPhone("");
+      setMemberPassword("");
       
-      console.log("Merged memberData:", mergedMemberData);
-      console.log("Merged memberData phone:", mergedMemberData.memberPhone);
+      // Show success message
+      await sweetTopSuccessAlert(`Welcome back, ${result.memberNick}!`, 2000);
       
-      // Update localStorage with merged data
-      localStorage.setItem("memberData", JSON.stringify(mergedMemberData));
-      
-      setAuthMember(mergedMemberData);
       handleLoginClose();
-    } catch (err) {
-      console.log(err);
+      return;
+    } catch (err: any){
+      console.log("Login error full object:", err);
+      console.log("Error response:", err?.response);
+      console.log("Error response data:", err?.response?.data);
+      console.log("Error response status:", err?.response?.status);
+      console.log("Error message:", err?.message);
       handleLoginClose();
-      sweetErrorHandling(err).then();
+      
+      // Check if error indicates user doesn't exist (needs to register first)
+      const errorMessage = err?.response?.data?.message || err?.message || "";
+      console.log("Extracted error message:", errorMessage);
+      
+      const isUserNotFound = err?.response?.status === 404 || 
+                            errorMessage.toLowerCase().includes("not found") ||
+                            (errorMessage.toLowerCase().includes("member") && errorMessage.toLowerCase().includes("nickname")) ||
+                            errorMessage.toLowerCase().includes("user not found") ||
+                            errorMessage.toLowerCase().includes("member not found") ||
+                            errorMessage.toLowerCase().includes("wrong credentials") ||
+                            errorMessage.toLowerCase().includes("invalid credentials");
+      
+      console.log("Is user not found?", isUserNotFound);
+      
+      // Check if this is a "user not found" type error
+      if (err?.response?.status === 401 || err?.response?.status === 404 || err?.response?.status === 400) {
+        // These status codes typically indicate user doesn't exist or wrong credentials
+        sweetErrorHandling(new Error(Messages.error6)).then();
+      } else {
+        // For other errors, show the original error
+        sweetErrorHandling(err).then();
+      }
     }
-  };
-
+    }
 
   return (
     <div>
@@ -177,7 +190,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "800px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/login.jpg"} alt="camera" />
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>Signup Form</h2>
               <TextField
@@ -233,7 +246,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/signup.jpg"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",

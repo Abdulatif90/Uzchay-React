@@ -289,7 +289,7 @@ interface HomeNavbarProps {
                     onClick={() => setSignupOpen(true)}
                     >
                     {" "}
-                    SIGN UP
+                    Sign up 
                     </Button>
                 ) : null}
                 </Box>

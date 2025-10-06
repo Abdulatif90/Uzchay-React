@@ -1,6 +1,6 @@
 .home-navbar {
     width: 100%;
-    height: 773px;
+    height: 573px;
     display: flex;
     background: url('/public/img/banner.webp');
     background-size: cover;
@@ -90,42 +90,44 @@ z-index: 100;
     justify-content: space-between;
 }
 .home-navbar .navbar-container .header-frame .detail {
-    width: 510px;
+    width: 383px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    margin-left: 75px;
 }
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
-    width: 450px;
-    height: 150px;
+    width: 338px;
+    height: 113px;
     font-family: "Roboto Serif";
-    font-size: 50px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    letter-spacing: -0.75px;
+    letter-spacing: -0.56px;
     color: #f8f8ff;
 }
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
-    width: 510px;
-    height: 42px;
-    font-family: "Roboto Serif";
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.54px;
-    color: #d7b686;
-}
-.home-navbar .navbar-container .header-frame .detail .service-txt {
-    margin-top: 23px;
-    width: 153px;
-    height: 23px;
+    width: 383px;
+    height: 32px;
     font-family: "Roboto Serif";
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.41px;
+    color: #d7b686;
+}
+.home-navbar .navbar-container .header-frame .detail .service-txt {
+    margin-top: 17px;
+    width: 115px;
+    height: 17px;
+    font-family: "Roboto Serif";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.23px;
     color: #d5d5d5;
 }
 
@@ -134,8 +136,8 @@ z-index: 100;
     
 }
 .home-navbar .navbar-container .detail .signup .signup-button{
-width: 210px;
-height: 60px;
+width: 150px;
+height: 40px;
 border-radius: 4px;
 background: #1976d2;
 color: #f8f8ff;
@@ -149,12 +151,12 @@ line-height: normal;
 
 .home-navbar .navbar-container .logo-frame {
     margin-bottom: 63px;
-    width: 690px; 
+    width: 790px; 
     height: 639px; 
  }
   .home-navbar .navbar-container .logo-frame .logo-img {
    width: 100%;
-   height: 550px;
+   height: 410px;
    background: url("/public/img/uzss.jpg");
    background-size: contain; 
    background-repeat: no-repeat;

@@ -14,20 +14,7 @@ export const sweetErrorHandling = async (err: any) => {
 
 export const sweetTopSuccessAlert = async (
   msg: string,
-  duration: number = 2000
-) => {
-  await Swal.fire({
-    position: "top-end",
-    icon: "success",
-    title: msg,
-    showConfirmButton: false,
-    timer: duration,
-  });
-};
-
-export const sweetTopSmallSuccessAlert = async (
-  msg: string,
-  duration: number = 2000
+  duration: number = 2500
 ) => {
   const Toast = Swal.mixin({
     toast: true,
@@ -35,6 +22,45 @@ export const sweetTopSmallSuccessAlert = async (
     showConfirmButton: false,
     timer: duration,
     timerProgressBar: true,
+    width: "350px",
+    padding: "16px 20px",
+    background: "linear-gradient(135deg, #4caf50 0%, #45a049 100%)",
+    color: "#ffffff",
+    iconColor: "#ffffff",
+    customClass: {
+      popup: "beautiful-toast-success",
+      title: "toast-title-success",
+      timerProgressBar: "toast-timer-success"
+    }
+  });
+
+  Toast.fire({
+    icon: "success",
+    title: msg,
+  }).then();
+};
+
+export const sweetTopSmallSuccessAlert = async (
+  msg: string,
+  duration: number = 2500
+) => {
+  // Use the same beautiful style as sweetTopSuccessAlert
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: duration,
+    timerProgressBar: true,
+    width: "350px",
+    padding: "16px 20px",
+    background: "linear-gradient(135deg, #4caf50 0%, #45a049 100%)",
+    color: "#ffffff",
+    iconColor: "#ffffff",
+    customClass: {
+      popup: "beautiful-toast-success",
+      title: "toast-title-success",
+      timerProgressBar: "toast-timer-success"
+    }
   });
 
   Toast.fire({

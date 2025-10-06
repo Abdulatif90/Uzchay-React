@@ -43,7 +43,7 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
     try {
       const member = new MemberService();
       await member.logout();
-      await sweetTopSuccessAlert("success", 700);
+      await sweetTopSuccessAlert("Successfully logged out! See you soon!", 2000);
       setAuthMember(null);
     } catch (err) {
       console.log(err);

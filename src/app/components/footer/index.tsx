@@ -33,7 +33,7 @@ export default function Footer() {
               />
             </Box>
             <Box 
-              className={"foot-desc-txt"}
+              className={"foot-desc-txt"} 
               textAlign={isMobile ? "center" : "left"}
               px={isMobile ? 2 : 0}
             >
@@ -42,7 +42,7 @@ export default function Footer() {
               creates an illusion with its cuisine.
             </Box>
             <Box 
-              className="sns-context"
+              className="sns-context" gap={2}
               justifyContent={isMobile ? "center" : "flex-start"}
               display="flex"
             >
@@ -124,7 +124,7 @@ export default function Footer() {
           sx={{ mt: isMobile ? "40px" : "80px" }}
         ></Stack>
         <Stack 
-          className={"copyright-txt"}
+          className={"copyright-txt"} 
           textAlign={isMobile ? "center" : "left"}
           sx={{ pb: isMobile ? 2 : 0 }}
         >
