@@ -35,7 +35,7 @@ export function Settings() {
   // Initialize with current authMember data or get from state if exists
   const getInitialFormData = useCallback(() => ({
     memberNick: authMember?.memberNick || "",
-    memberPhone: authMember?.memberPhone || "",
+    memberPhone: authMember?.memberPhone || "", 
     memberAddress: authMember?.memberAddress || "",
     memberDesc: authMember?.memberDesc || "",
     memberImage: authMember?.memberImage || "",
@@ -61,7 +61,7 @@ export function Settings() {
       const formData = getInitialFormData();
       console.log("Setting form data in useEffect:", formData);
       setMemberUpdateInput(formData);
-      localStorage.setItem("memberData", JSON.stringify(formData));
+      localStorage.setItem("memberData", JSON.stringify(authMember));
     }
   }, [authMember, getInitialFormData]);
 
@@ -91,10 +91,10 @@ export function Settings() {
     try {
       if (!authMember) throw new Error(Messages.error2);
       if (
-        memberUpdateInput.memberNick === "" ||
-        memberUpdateInput.memberPhone === "" ||
-        memberUpdateInput.memberAddress === "" ||
-        memberUpdateInput.memberDesc === ""
+        !memberUpdateInput.memberNick?.trim() ||
+        !memberUpdateInput.memberPhone?.trim() ||
+        !memberUpdateInput.memberAddress?.trim() ||
+        !memberUpdateInput.memberDesc?.trim()
       ) {
         throw new Error(Messages.error3);
       }
@@ -115,17 +115,16 @@ export function Settings() {
       
       console.log("Update result:", result);
       
-      // Update localStorage with new member data
-      localStorage.setItem("memberData", JSON.stringify(result));
+      // Only update global state, ContextProvider will handle localStorage
       setAuthMember(result);
 
       // Update local state with new data
       setMemberUpdateInput({
-        memberNick: result.memberNick,
-        memberPhone: result.memberPhone,
-        memberAddress: result.memberAddress,
-        memberDesc: result.memberDesc,
-        memberImage: result.memberImage,
+        memberNick: result.memberNick || "",
+        memberPhone: result.memberPhone || "",
+        memberAddress: result.memberAddress || "",
+        memberDesc: result.memberDesc || "",
+        memberImage: result.memberImage || "",
       });
 
       // Update image display

@@ -15,7 +15,7 @@ The Help page contact form is configured to send emails to **Abdulatifsh90@gmail
 2. Click **Add New Service**
 3. Choose **Gmail** (or your preferred email provider)
 4. Connect your email account
-5. Note the **Service ID** (e.g., `service_burak_restaurant`)
+5. Note the **Service ID** (e.g., `service_uzchay_restaurant`)
 
 ### 3. Create Email Template
 1. Go to **Email Templates** in your EmailJS dashboard
@@ -35,7 +35,7 @@ Message: {{message}}
 Reply to: {{reply_to}}
 
 Best regards,
-Burak Restaurant Website
+uzchay Restaurant Website
 ```
 
 4. Note the **Template ID** (e.g., `template_contact_form`)

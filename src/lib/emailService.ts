@@ -11,7 +11,7 @@ export const sendContactEmail = async (formData: {
 }) => {
   try {
     // Check if EmailJS is configured
-    if (!emailConfig.SERVICE_ID || emailConfig.SERVICE_ID === 'service_burak_restaurant' ||
+    if (!emailConfig.SERVICE_ID || emailConfig.SERVICE_ID === 'service_uzchay_restaurant' ||
         !emailConfig.TEMPLATE_ID || emailConfig.TEMPLATE_ID === 'template_contact_form' ||
         !emailConfig.PUBLIC_KEY || emailConfig.PUBLIC_KEY === 'your_emailjs_public_key') {
       

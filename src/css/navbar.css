@@ -438,6 +438,7 @@ line-height: normal;
    margin-top: -75px ;
    border-radius: 30px;
    margin-left: 180px;
+   display: none;
      
  }
   
@@ -504,7 +505,8 @@ line-height: normal;
     margin-top: 10px !important;
   }
   .home-navbar .navbar-container .logo-frame .logo-img {
-    height: 290px;
+    height: 190px;
+    display: none;
   }
   
   .other-navbar .navbar-container .menu .brand-logo {

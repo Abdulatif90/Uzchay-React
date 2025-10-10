@@ -329,7 +329,7 @@ export default function Products( props: ProductsProps) {
           <Stack className="address-area">
             <Box className="title">Our address</Box>
             <iframe
-              title="Burak Restaurant Location"
+              title="uzchay Restaurant Location"
               style={{ marginTop: "60px" }}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101587.62171833022!2d126.88394094999999!3d37.54406899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2c74aeddea1%3A0x8b3046532cc715f6!2sSeoul%2C%20South%20Korea!5e0!3m2!1sen!2s!4v1696491234567!5m2!1sen!2s"
               height="500px"

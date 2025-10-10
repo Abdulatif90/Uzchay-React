@@ -121,11 +121,8 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       const member = new MemberService();
       const result = await member.login(loginInput);
       setAuthMember(result);
-      if (result) {
-        localStorage.setItem("memberData", JSON.stringify(result));
-      } else {
-        localStorage.removeItem("memberData");
-      }
+      
+      // ContextProvider will handle localStorage automatically
       
       // Clear form fields after successful login
       setMemberNick("");

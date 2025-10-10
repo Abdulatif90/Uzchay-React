@@ -90,9 +90,9 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
       <Footer />
       <AuthenticationalModal
       signupOpen={signupOpen}
+      handleSignupClose={handleSignupClose}
       loginOpen={loginOpen}
       handleLoginClose={handleLoginClose}
-      handleSignupClose={handleSignupClose}
       />
     </>
   );

@@ -7,7 +7,7 @@
 
 export const emailConfig = {
   // Replace these with your actual EmailJS credentials
-  SERVICE_ID: 'service_burak_restaurant', // Your EmailJS service ID
+  SERVICE_ID: 'service_uzchay_restaurant', // Your EmailJS service ID
   TEMPLATE_ID: 'template_contact_form',   // Your EmailJS template ID  
   PUBLIC_KEY: 'your_emailjs_public_key', // Your EmailJS public key
   TO_EMAIL: 'Abdulatifsh90@gmail.com'    // Destination email address
@@ -34,5 +34,5 @@ Message: {{message}}
 Reply to: {{reply_to}}
 
 Best regards,
-Burak Restaurant Website
+uzchay Restaurant Website
 */
