@@ -1,6 +1,6 @@
 .home-navbar {
     width: 100%;
-    height: 773px;
+    height: 573px;
     display: flex;
     background: url('/public/img/banner.webp');
     background-size: cover;
@@ -21,8 +21,15 @@
 }
 
 .home-navbar .navbar-container .menu .brand-logo {
-    height: 30px;
-    width: 125px;
+    margin-top: 30px;
+    height: 200px;
+    width: 300px;
+}
+
+.brand-logo-mobile {
+  height: 120px !important;
+  width: 180px !important;
+  margin-top: 15px !important;
 }
 .home-navbar .navbar-container .menu .links {
     min-width: 700px;
@@ -83,42 +90,44 @@ z-index: 100;
     justify-content: space-between;
 }
 .home-navbar .navbar-container .header-frame .detail {
-    width: 510px;
+    width: 383px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    margin-left: 75px;
 }
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
-    width: 450px;
-    height: 150px;
+    width: 338px;
+    height: 113px;
     font-family: "Roboto Serif";
-    font-size: 50px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    letter-spacing: -0.75px;
+    letter-spacing: -0.56px;
     color: #f8f8ff;
 }
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
-    width: 510px;
-    height: 42px;
-    font-family: "Roboto Serif";
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.54px;
-    color: #d7b686;
-}
-.home-navbar .navbar-container .header-frame .detail .service-txt {
-    margin-top: 23px;
-    width: 153px;
-    height: 23px;
+    width: 383px;
+    height: 32px;
     font-family: "Roboto Serif";
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.41px;
+    color: #d7b686;
+}
+.home-navbar .navbar-container .header-frame .detail .service-txt {
+    margin-top: 17px;
+    width: 115px;
+    height: 17px;
+    font-family: "Roboto Serif";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.23px;
     color: #d5d5d5;
 }
 
@@ -127,8 +136,8 @@ z-index: 100;
     
 }
 .home-navbar .navbar-container .detail .signup .signup-button{
-width: 210px;
-height: 60px;
+width: 150px;
+height: 40px;
 border-radius: 4px;
 background: #1976d2;
 color: #f8f8ff;
@@ -141,17 +150,18 @@ line-height: normal;
 }
 
 .home-navbar .navbar-container .logo-frame {
-    margin-top: 43px;
-    width: 690px; 
-    height: 419px; 
+    margin-bottom: 63px;
+    width: 790px; 
+    height: 639px; 
  }
   .home-navbar .navbar-container .logo-frame .logo-img {
    width: 100%;
-   height: 100%;
-   background: url("/public/img/logo.webp");
+   height: 410px;
+   background: url("/public/img/uzss.jpg");
    background-size: contain; 
    background-repeat: no-repeat;
-   filter: invert(25%);
+   margin-top: -75px ;
+   border-radius: 30px;
  }
 
 
@@ -176,8 +186,8 @@ line-height: normal;
 }
 
 .other-navbar .navbar-container .menu .brand-logo {
-    height: 30px;
-    width: 125px;
+    height: 200px;
+   
 }
 .other-navbar .navbar-container .menu .links {
     min-width: 700px;
@@ -366,4 +376,160 @@ line-height: normal;
   height: 260px;
   display: flex;
   flex-direction: column;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Hamburger menu styles */
+.hamburger-menu {
+  display: none !important;
+}
+
+.user-avatar-mobile {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 0;
+  color: #f8f8ff !important;
+  text-decoration: none;
+  border-bottom: 1px solid #555;
+}
+
+.mobile-nav-link:hover {
+  color: #d7b686 !important;
+  background-color: rgba(215, 182, 134, 0.1);
+  padding-left: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Large screens - keep original logo size */
+@media (min-width: 901px) {
+  .home-navbar .navbar-container .menu .brand-logo {
+    height: 200px;
+    width: 300px;
+  }
+}
+
+/* Tablet and below */
+@media (max-width: 900px) {
+  .home-navbar .navbar-container .menu .links {
+    display: none;
+  }
+  
+  .hamburger-menu {
+    display: block !important;
+  }
+  
+  .home-navbar .navbar-container .menu .brand-logo {
+    height: 120px;
+    width: 180px;
+    margin-top: 15px;
+  }
+  .home-navbar .navbar-container .logo-frame .logo-img {
+   width: 100%;
+   height: 333px;
+   background: url("/public/img/uzss.jpg");
+   background-size: contain; 
+   background-repeat: no-repeat;
+   margin-top: -75px ;
+   border-radius: 30px;
+   margin-left: 180px;
+   display: none;
+     
+ }
+  
+  .brand-logo-mobile {
+    height: 120px !important;
+    width: 180px !important;
+    margin-top: 15px !important;
+  }
+  
+  .home-navbar .navbar-container .header-frame {
+    margin-top: 80px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .home-navbar .navbar-container .header-frame .detail {
+    width: 100%;
+    align-items: center;
+  }
+  
+  .home-navbar .navbar-container .header-frame .detail .head-main-txt {
+    width: 100%;
+    font-size: 36px;
+    text-align: center;
+  }
+  
+  .home-navbar .navbar-container .header-frame .logo-frame {
+    margin: 20px 0 0 0 !important;
+    
+  }
+  
+  .other-navbar .navbar-container .menu .links {
+    display: none;
+  }
+  
+  .other-navbar .navbar-container .menu .brand-logo {
+    height: 120px;
+    width: 180px;
+    margin-top: 15px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  .home-navbar {
+    height: 500px;
+  }
+  
+  .home-navbar .navbar-container {
+    margin-top: 20px;
+    height: auto;
+  }
+  
+  .home-navbar .navbar-container .menu .brand-logo {
+    height: 80px;
+    width: 120px;
+    margin-top: 10px;
+  }
+  
+  .brand-logo-mobile {
+    height: 80px !important;
+    width: 120px !important;
+    margin-top: 10px !important;
+  }
+  .home-navbar .navbar-container .logo-frame .logo-img {
+    height: 190px;
+    display: none;
+  }
+  
+  .other-navbar .navbar-container .menu .brand-logo {
+    height: 80px;
+    width: 120px;
+    margin-top: 10px;
+  }
+  .home-navbar .navbar-container .header-frame {
+    margin-top: 0px;
+    height: auto;
+  }
+  
+  .home-navbar .navbar-container .header-frame .detail .head-main-txt {
+    font-size: 28px;
+    height: auto;
+    width: 90%;
+  }
+  
+  .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    font-size: 14px;
+  }
+  
+  .home-navbar .navbar-container .header-frame .detail .service-txt {
+    font-size: 14px;
+  }
 }

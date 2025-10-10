@@ -91,10 +91,10 @@ export default function Products( props: ProductsProps) {
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className="avatar-big-box">
-            <Stack className="top-title">
-              <Box className="top-text">Burak Restaurant</Box>
-              <Box className="single-search">
-                <input
+            <Stack className="top-title" mt={3}>
+              <Box className="top-text" >UzChay Restaurant</Box>
+              <Box className="single-search" ml={3}>
+                <input 
                   type={"search"}
                   className="single-search-input"
                   name={"singleResearch"}
@@ -314,16 +314,13 @@ export default function Products( props: ProductsProps) {
         <Box className="brand-text">Our Family Brands</Box>
         <Stack className="brand-cards">
           <Box className="brand-card">
-            <img src="/img/gurme.webp" alt="" />
+            <img src="/img/mealdonor.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/seafood.webp" alt="" />
+            <img src="/img/threewomen.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/sweets.webp" alt="" />
-          </Box>
-          <Box className="brand-card">
-            <img src="/img/doner.webp" alt="" />
+            <img src="/img/Uzchaysweetseafood.jpg" alt="" />
           </Box>
         </Stack>
       </div>
@@ -332,9 +329,9 @@ export default function Products( props: ProductsProps) {
           <Stack className="address-area">
             <Box className="title">Our address</Box>
             <iframe
-              title="Burak Restaurant Location"
+              title="uzchay Restaurant Location"
               style={{ marginTop: "60px" }}
-              src="https://www.google.com/maps?q=Burak+restaurand+istanbul&amp;t&amp;z=13&amp;ie=UTF8&amp;iwloc&amp;output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101587.62171833022!2d126.88394094999999!3d37.54406899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2c74aeddea1%3A0x8b3046532cc715f6!2sSeoul%2C%20South%20Korea!5e0!3m2!1sen!2s!4v1696491234567!5m2!1sen!2s"
               height="500px"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>

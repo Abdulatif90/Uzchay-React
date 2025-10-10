@@ -13,7 +13,8 @@ import {OrderStatus} from "../../../lib/enum/order.enum";
 import OrderService from "../../services/OrderService";
 import { useDispatch } from "react-redux";
 import { useGlobals } from "../../hooks/useGlobals";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import {serverApi} from "../../../lib/config";
 import "../../../css/order.css"
 
 /** REDUX SLICE & SELECTOR **/
@@ -90,9 +91,13 @@ export default function OrdersPage() {
             <Box className={"member-box"}>
               <div className={"order-user-img"}>
                 <img 
-                  src={"/icons/default-user.svg"}
-                  className={"order-user-avatar"}
-                  alt=""
+                   src={
+                      authMember?.memberImage
+                      ? `${serverApi}/${authMember.memberImage}?t=${Date.now()}`
+                      : "/icons/default-user.svg"
+                      }
+                   className={"order-user-avatar"}
+                   alt="User avatar"
                 />
                 <div className={"order-user-icon-box"}>
                   <img

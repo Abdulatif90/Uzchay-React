@@ -55,12 +55,10 @@ class MemberService {
 
       const member: Member = result.data.member;
       console.log("member:", member);
-      if (typeof member !== 'undefined' && member !== null) {
-        localStorage.setItem("memberData", JSON.stringify(member));
-      } else {
-        localStorage.removeItem("memberData");
-      }
-
+      
+      // Don't automatically store member data in localStorage after signup
+      // User should login manually after signup to set localStorage
+      
       return member;
     } catch(err) {
       console.log("Error, signup", err)
@@ -76,8 +74,18 @@ class MemberService {
 
       const member: Member = result.data.member;
       console.log("member:", member);
-      localStorage.setItem("memberData", JSON.stringify(member));
-      return member;
+      
+      // Ensure all required fields have default values
+      const normalizedMember: Member = {
+        ...member,
+        memberPhone: member.memberPhone || "",
+        memberAddress: member.memberAddress || "",
+        memberDesc: member.memberDesc || "",
+        memberImage: member.memberImage || ""
+      };
+      
+      localStorage.setItem("memberData", JSON.stringify(normalizedMember));
+      return normalizedMember;
       
        } catch (err) {
       console.log("Error, login", err);
@@ -123,9 +131,18 @@ class MemberService {
       console.log("updateMember:", result);
 
       const member: Member = result.data;
-      localStorage.setItem("memberData", JSON.stringify(member));
-
-      return member;
+      
+      // Ensure all fields have proper default values
+      const normalizedMember: Member = {
+        ...member,
+        memberPhone: member.memberPhone || "",
+        memberAddress: member.memberAddress || "",
+        memberDesc: member.memberDesc || "",
+        memberImage: member.memberImage || ""
+      };
+      
+      // Remove localStorage handling - let ContextProvider handle it
+      return normalizedMember;
     } catch (err) {
       console.log("Error, updateMember:", err);
       throw err;

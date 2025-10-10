@@ -10,7 +10,7 @@ import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetTopSuccessAlert } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
@@ -86,6 +86,17 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       };
       const member = new MemberService();
       await member.signup(signupInput);
+      
+      // Clear form fields after successful signup
+      setMemberNick("");
+      setMemberPhone("");
+      setMemberPassword("");
+      
+      // Don't automatically log in after signup
+      // User should manually login after signup
+      
+      // Show success message
+      await sweetTopSuccessAlert(`Welcome ${memberNick}! Account created successfully! Please login to continue.`, 3000);
 
       handleSignupClose();
     } catch (err){
@@ -99,6 +110,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const handleLoginRequest = async () => {
     try{
       console.log("inputs:", memberNick, memberPassword);
+
       const isfullfil = memberNick !== "" && memberPassword !== "";
       if(!isfullfil) throw new Error(Messages.error3);
 
@@ -109,11 +121,17 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       const member = new MemberService();
       const result = await member.login(loginInput);
       setAuthMember(result);
-      if (result) {
-        localStorage.setItem("memberData", JSON.stringify(result));
-      } else {
-        localStorage.removeItem("memberData");
-      }
+      
+      // ContextProvider will handle localStorage automatically
+      
+      // Clear form fields after successful login
+      setMemberNick("");
+      setMemberPhone("");
+      setMemberPassword("");
+      
+      // Show success message
+      await sweetTopSuccessAlert(`Welcome back, ${result.memberNick}!`, 2000);
+      
       handleLoginClose();
       return;
     } catch (err: any){
@@ -169,7 +187,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "800px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/login.jpg"} alt="camera" />
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>Signup Form</h2>
               <TextField
@@ -225,7 +243,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/signup.jpg"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",

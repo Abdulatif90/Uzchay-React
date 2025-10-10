@@ -8,6 +8,7 @@ import { Box, Button, Container, Divider, Rating, Stack } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { setRestaurant, setChosenProduct } from "./slice";
 import { Product } from "../../../lib/types/product";
+import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { retrieveRestaurant, retrieveChosenProduct } from "./selector";
 import {Member} from "../../../lib/types/member";
@@ -20,6 +21,10 @@ import { CartItem } from "../../../lib/types/search";
 
 
 /** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
+  setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
+});
 
 const restaurantRetriever = createSelector(
   retrieveRestaurant,
@@ -40,29 +45,33 @@ interface ChosenProductProps {
 }
 
 export default function ChosenProduct(props : ChosenProductProps) {
-  const {onAdd} = props;
-  const { productId } = useParams<{ productId: string }>();
-  const dispatch = useDispatch();
-  const { restaurant } = useSelector(restaurantRetriever);
+  const { onAdd } = props;
+  const { productId } = useParams<{ productId: string}>();
+  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
+  const { restaurant } = useSelector(restaurantRetriever);
 
-  useEffect(() => {
-    if (productId) {
-      const product = new ProductService();
-      product
-        .getProduct(productId)
-        .then((data: Product) => dispatch(setChosenProduct(data)))
-        .catch((err: unknown) => console.log(err));
+   useEffect(() => {
+    if (!productId) {
+      console.log("No product ID found in URL");
+      return;
     }
+
+    const product = new ProductService();
+    product
+      .getProduct(productId)
+      .then((data) => setChosenProduct(data))
+      .catch((err) => console.log(err));
 
     const member = new MemberService();
     member
       .getRestaurant()
-      .then((data: Member) => dispatch(setRestaurant(data)))
-      .catch((err: unknown) => console.log(err));
-  }, [productId, dispatch]);
+      .then((data) => setRestaurant(data))
+      .catch((err) => console.log(err));
+  }, [productId, setChosenProduct, setRestaurant]);
 
-  if (!chosenProduct) return null;
+
+  if (!chosenProduct || !productId) return null;
 
   return (
     <div className={"chosen-product"}>

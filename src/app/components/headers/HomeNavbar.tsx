@@ -1,10 +1,11 @@
-import { Box, Button, Container, Stack, ListItemIcon, Menu, MenuItem} from "@mui/material";
+import { Box, Button, Container, Stack, ListItemIcon, Menu, MenuItem, IconButton, Drawer, useMediaQuery, useTheme} from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import Basket  from './Basket';
 import { useGlobals } from '../../hooks/useGlobals'; 
 import { serverApi } from "../../../lib/config";
-import { Logout } from "@mui/icons-material";
+import { Logout, Menu as MenuIcon, Close } from "@mui/icons-material";
+import { useState } from "react";
 
 
 interface HomeNavbarProps {
@@ -36,16 +37,25 @@ interface HomeNavbarProps {
         handleLogoutRequest,
     } = props;
     const { authMember } = useGlobals();
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     return (
-        <div className=" container home-navbar">
+        <div className="container home-navbar">
         <Container className="navbar-container">
             <Stack className="menu">
             <Box>
                 <NavLink to={"/"}>
-                <img className="brand-logo" src="/icons/burak.svg" alt="Brand Logo"/>
+                {!isMobile && <img className="brand-logo" src="/icons/UzChay.png" alt="UzChay Logo"/>}
+                {isMobile && <img className="brand-logo-mobile" src="/icons/UzChay.png" alt="UzChay Logo"/>}
                 </NavLink>
             </Box>
+            {!isMobile ? (
             <Stack className="links">
                 <Box className={"hover-line"}>
                 <NavLink
@@ -163,6 +173,106 @@ interface HomeNavbarProps {
                 </MenuItem>
                 </Menu>
             </Stack>
+            ) : (
+            <>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    className="hamburger-menu"
+                >
+                    <MenuIcon sx={{ color: '#f8f8ff' }} />
+                </IconButton>
+                <Drawer
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true,
+                    }}
+                    sx={{
+                        '& .MuiDrawer-paper': {
+                            boxSizing: 'border-box',
+                            width: 280,
+                            backgroundColor: '#343434',
+                            color: '#f8f8ff'
+                        },
+                    }}
+                >
+                    <Box sx={{ padding: 2 }}>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+                            <img src="/icons/UzChay.png" alt="UzChay Logo" style={{ width: '120px' }} />
+                            <IconButton onClick={handleDrawerToggle} sx={{ color: '#f8f8ff' }}>
+                                <Close />
+                            </IconButton>
+                        </Stack>
+                        <Stack spacing={2}>
+                            <NavLink to="/" onClick={handleDrawerToggle} className="mobile-nav-link">
+                                Home
+                            </NavLink>
+                            <NavLink to="/products" onClick={handleDrawerToggle} className="mobile-nav-link">
+                                Products
+                            </NavLink>
+                            {authMember && (
+                                <NavLink to="/orders" onClick={handleDrawerToggle} className="mobile-nav-link">
+                                    Orders
+                                </NavLink>
+                            )}
+                            {authMember && (
+                                <NavLink to="/member-page" onClick={handleDrawerToggle} className="mobile-nav-link">
+                                    My Page
+                                </NavLink>
+                            )}
+                            <NavLink to="/help" onClick={handleDrawerToggle} className="mobile-nav-link">
+                                Help
+                            </NavLink>
+                            <Box mt={2}>
+                                <Basket
+                                    cartItems={cartItems}
+                                    onAdd={onAdd}
+                                    onRemove={onRemove}
+                                    onDelete={onDelete}
+                                    onDeleteAll={onDeleteAll}
+                                />
+                            </Box>
+                            {!authMember ? (
+                                <Button
+                                    variant="contained"
+                                    className="login-button"
+                                    onClick={() => {
+                                        setLoginOpen(true);
+                                        handleDrawerToggle();
+                                    }}
+                                    fullWidth
+                                >
+                                    Login
+                                </Button>
+                            ) : (
+                                <Box display="flex" alignItems="center" gap={1}>
+                                    <img
+                                        className="user-avatar-mobile"
+                                        src={
+                                            authMember?.memberImage
+                                                ? `${serverApi}/${authMember.memberImage}?t=${Date.now()}`
+                                                : "/icons/default-user.svg"
+                                        }
+                                        alt="User Avatar"
+                                        onClick={handleLogoutClick}
+                                    />
+                                    <Button
+                                        onClick={handleLogoutRequest}
+                                        sx={{ color: '#f8f8ff' }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </Box>
+                            )}
+                        </Stack>
+                    </Box>
+                </Drawer>
+            </>
+            )}
             </Stack>
             <Stack className="header-frame">
             <Stack className="detail">
@@ -179,12 +289,12 @@ interface HomeNavbarProps {
                     onClick={() => setSignupOpen(true)}
                     >
                     {" "}
-                    SIGN UP
+                    Sign up 
                     </Button>
                 ) : null}
                 </Box>
-            </Stack>
-            <Box className="logo-frame">
+            </Stack >
+            <Box className="logo-frame" ml={20}>
                 <div className="logo-img"></div>
             </Box>
             </Stack>

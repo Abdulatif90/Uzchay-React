@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Stack, Tabs } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Tab from "@mui/material/Tab";
@@ -12,15 +12,61 @@ import TabPanel from "@mui/lab/TabPanel";
 import "../../../css/help.css";
 import { faq } from "../../../lib/data/faq";
 import { terms } from "../../../lib/data/terms";
+import { sweetTopSmallSuccessAlert, sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sendContactEmail } from "../../../lib/emailService";
+import { emailConfig } from "../../../lib/emailConfig";
 
 
   
 export default function HelpPage() {
   const [value, setValue] = React.useState("1");
+  const [formData, setFormData] = useState({
+    memberNick: "",
+    memberEmail: "",
+    memberMsg: ""
+  });
 
   /** HANDLERS **/
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!formData.memberNick.trim() || !formData.memberEmail.trim() || !formData.memberMsg.trim()) {
+      await sweetErrorHandling("Please fill in all fields");
+      return;
+    }
+
+    try {
+      // Send email using email service
+      const result = await sendContactEmail(formData);
+      
+      console.log("Email service result:", result);
+      
+      // Show small success alert
+      await sweetTopSmallSuccessAlert(`Message sent to ${emailConfig.TO_EMAIL}!`, 1000);
+      
+      // Reset form
+      setFormData({
+        memberNick: "",
+        memberEmail: "",
+        memberMsg: ""
+      });
+    } catch (err) {
+      console.log("Error sending message:", err);
+      await sweetErrorHandling("Failed to send message. Please try again.");
+    }
   };
 
   return (
@@ -80,8 +126,7 @@ export default function HelpPage() {
                       <p>Fill out below form to send a message!</p>
                     </Box>
                     <form
-                      action={"#"}
-                      method={"POST"}
+                      onSubmit={handleSubmit}
                       className={"admin-letter-frame"}
                     >
                       <div className={"admin-input-box"}>
@@ -90,14 +135,20 @@ export default function HelpPage() {
                           type={"text"}
                           name={"memberNick"}
                           placeholder={"Type your name here"}
+                          value={formData.memberNick}
+                          onChange={handleInputChange}
+                          required
                         />
                       </div>
                       <div className={"admin-input-box"}>
                         <label>Your email</label>
                         <input
-                          type={"text"}
+                          type={"email"}
                           name={"memberEmail"}
                           placeholder={"Type your email here"}
+                          value={formData.memberEmail}
+                          onChange={handleInputChange}
+                          required
                         />
                       </div>
                       <div className={"admin-input-box"}>
@@ -105,6 +156,9 @@ export default function HelpPage() {
                         <textarea
                           name={"memberMsg"}
                           placeholder={"Your message"}
+                          value={formData.memberMsg}
+                          onChange={handleInputChange}
+                          required
                         ></textarea>
                       </div>
                       <Box

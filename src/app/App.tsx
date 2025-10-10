@@ -43,7 +43,7 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
     try {
       const member = new MemberService();
       await member.logout();
-      await sweetTopSuccessAlert("success", 700);
+      await sweetTopSuccessAlert("Successfully logged out! See you soon!", 2000);
       setAuthMember(null);
     } catch (err) {
       console.log(err);
@@ -73,7 +73,6 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
-          setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
           anchorEl={anchorEl}
           handleLogoutClick={handleLogoutClick}
@@ -91,9 +90,9 @@ const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
       <Footer />
       <AuthenticationalModal
       signupOpen={signupOpen}
+      handleSignupClose={handleSignupClose}
       loginOpen={loginOpen}
       handleLoginClose={handleLoginClose}
-      handleSignupClose={handleSignupClose}
       />
     </>
   );

@@ -21,7 +21,10 @@ export function Settings() {
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   console.log("authMember in Settings:", authMember);
+  console.log("authMember full object:", JSON.stringify(authMember, null, 2));
+  console.log("memberNick from authMember:", authMember?.memberNick);
   console.log("memberPhone from authMember:", authMember?.memberPhone);
+  console.log("All authMember keys:", authMember ? Object.keys(authMember) : "no authMember");
   console.log("memberUpdateInput initial state will be:", {
     memberNick: authMember?.memberNick || "",
     memberPhone: authMember?.memberPhone || "",
@@ -32,7 +35,7 @@ export function Settings() {
   // Initialize with current authMember data or get from state if exists
   const getInitialFormData = useCallback(() => ({
     memberNick: authMember?.memberNick || "",
-    memberPhone: authMember?.memberPhone || "",
+    memberPhone: authMember?.memberPhone || "", 
     memberAddress: authMember?.memberAddress || "",
     memberDesc: authMember?.memberDesc || "",
     memberImage: authMember?.memberImage || "",
@@ -58,6 +61,7 @@ export function Settings() {
       const formData = getInitialFormData();
       console.log("Setting form data in useEffect:", formData);
       setMemberUpdateInput(formData);
+      localStorage.setItem("memberData", JSON.stringify(authMember));
     }
   }, [authMember, getInitialFormData]);
 
@@ -87,10 +91,10 @@ export function Settings() {
     try {
       if (!authMember) throw new Error(Messages.error2);
       if (
-        memberUpdateInput.memberNick === "" ||
-        memberUpdateInput.memberPhone === "" ||
-        memberUpdateInput.memberAddress === "" ||
-        memberUpdateInput.memberDesc === ""
+        !memberUpdateInput.memberNick?.trim() ||
+        !memberUpdateInput.memberPhone?.trim() ||
+        !memberUpdateInput.memberAddress?.trim() ||
+        !memberUpdateInput.memberDesc?.trim()
       ) {
         throw new Error(Messages.error3);
       }
@@ -111,17 +115,16 @@ export function Settings() {
       
       console.log("Update result:", result);
       
-      // Update localStorage with new member data
-      localStorage.setItem("memberData", JSON.stringify(result));
+      // Only update global state, ContextProvider will handle localStorage
       setAuthMember(result);
 
       // Update local state with new data
       setMemberUpdateInput({
-        memberNick: result.memberNick,
-        memberPhone: result.memberPhone,
-        memberAddress: result.memberAddress,
-        memberDesc: result.memberDesc,
-        memberImage: result.memberImage,
+        memberNick: result.memberNick || "",
+        memberPhone: result.memberPhone || "",
+        memberAddress: result.memberAddress || "",
+        memberDesc: result.memberDesc || "",
+        memberImage: result.memberImage || "",
       });
 
       // Update image display
@@ -144,18 +147,35 @@ export function Settings() {
   };
 
   const handleImageViewer = (e: T) => {
-    const file = e.target.files[0];
-    console.log("file", file);
-    const fileType = file.type,
-      validateImagesTypes = ["image/jpg", "image/jpeg", "image/png"];
+    const file = e.target.files?.[0];
+    console.log("Selected file:", file);
+    
+    if (!file) {
+      console.log("No file selected");
+      return;
+    }
+    
+    const fileType = file.type;
+    const validateImagesTypes = ["image/jpg", "image/jpeg", "image/png"];
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+    
+    console.log("File type:", fileType);
+    console.log("File size:", file.size);
+    
     if (!validateImagesTypes.includes(fileType)) {
       sweetErrorHandling(Messages.error5).then();
-    } else {
-      if (file) {
-        setImageFile(file);
-        setMemberImage(URL.createObjectURL(file));
-      }
+      return;
     }
+    
+    if (file.size > maxFileSize) {
+      sweetErrorHandling("File size should be less than 5MB").then();
+      return;
+    }
+    
+    // Set the file and preview
+    setImageFile(file);
+    setMemberImage(URL.createObjectURL(file));
+    console.log("Image file set successfully");
   };
   return (
     <Box className={"settings"}>
@@ -165,9 +185,9 @@ export function Settings() {
           <span>Upload image</span>
           <p>JPG, JPEG, PNG formats only!</p>
           <div className={"up-del-box"}>
-           <Button component="label" onChange={handleImageViewer}>
+           <Button component="label">
               <CloudDownloadIcon />
-              <input type="file" hidden />
+              <input type="file" hidden onChange={handleImageViewer} accept="image/jpeg,image/jpg,image/png" />
             </Button>
           </div>
         </div>

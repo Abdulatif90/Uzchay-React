@@ -60,7 +60,7 @@ export default function UserPage() {
                   {authMember?.memberNick}
                 </span>
                 <span className={"order-user-prof"}>
-                  {authMember?.memberType}
+                  {authMember?.memberPhone}
                 </span>
                 <span className={"order-user-prof"}>
                   {authMember?.memberAddress
