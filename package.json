@@ -38,11 +38,14 @@
     "@types/react-dom": "18.2.18",
     "@types/react-router-dom": "5.3.3",
     "@types/redux-logger": "^3.0.13",
+    "eslint": "8",
+    "eslint-config-react-app": "7",
     "ts-node": "^10.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "start:prod": "serve -s build -l 80",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "train": "ts-node src/app/MaterialTheme/train.ts"
