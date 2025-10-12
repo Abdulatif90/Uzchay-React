@@ -277,7 +277,7 @@ interface HomeNavbarProps {
             <Stack className="header-frame">
             <Stack className="detail">
                 <Box className={"head-main-txt"}>
-                World's Most delicious Cousine
+                Welcome to our Cousine !!! It is our pleasure to serve you.
                 </Box>
                 <Box className="wel-txt">The Choice, not just a choice</Box>
                 <Box className="service-txt">24 hours service</Box>
